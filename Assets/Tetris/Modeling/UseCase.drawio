@@ -1,0 +1,55 @@
+<mxfile host="65bd71144e">
+    <diagram id="MlxceuPRBCW1Q4Jy0KJE" name="Player">
+        <mxGraphModel dx="1305" dy="861" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="11" style="edgeStyle=none;html=1;" parent="1" source="2" target="5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" style="edgeStyle=none;html=1;" parent="1" source="2" target="6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="edgeStyle=none;html=1;" parent="1" source="2" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" style="edgeStyle=none;html=1;" parent="1" source="2" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=none;html=1;" parent="1" source="2" target="8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" style="edgeStyle=none;html=1;" edge="1" parent="1" source="2" target="17">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Player" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="130" y="380" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="ゲームをスタートする" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="200" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="ミノを回転する" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="310" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="ミノの軌道を変える" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="420" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="ミノの落下スピードを&lt;br&gt;上げる" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="530" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="ミノをすぐ落とす" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="390" y="650" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="5amfYNsInlRTO-vCzV3D-26" value="&lt;div style=&quot;text-align: left&quot;&gt;位置&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;回転の起点ブロック&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;回転するための身のバリエーション&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;div&gt;回転できるか&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="540" y="300" width="210" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="5amfYNsInlRTO-vCzV3D-27" value="軌道を変えられるか" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="540" y="460" width="120" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="5amfYNsInlRTO-vCzV3D-28" value="ゲームが始まる前か" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="515" y="200" width="120" height="20" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
