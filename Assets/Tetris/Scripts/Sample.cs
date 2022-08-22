@@ -4,6 +4,9 @@ using UnityEngine;
 using VContainer;
 using Tetris.Scripts.Domains.Minos;
 using Tetris.Scripts.Domains.Boards;
+using UniRx;
+using System;
+using System.Threading.Tasks;
 
 public class Sample : MonoBehaviour
 {
@@ -20,68 +23,65 @@ public class Sample : MonoBehaviour
         _mino = _minoFactory.CreateTMino();
     }
 
-    void Start()
-    {
-        List<Vector2Int> positions = _mino.GetPiecePositions();
-        foreach(Vector2Int indexPos in positions) {
-            Vector2 pos = GetPosition(indexPos);
-            GameObject copy = Instantiate(_minoViewPrefab);
-            copy.transform.position = pos;
-            _minoViews.Add(copy);
-        }
-    }
-
-    float span = 0.1f;
+    float span = 0.4f;
     private float currentTime = 0f;
 
-    bool now = false;
+    bool moveNow = false;
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.D)) {
+            if (CanMove(1,0)) {
+                _mino.MoveRight();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.A)) {
+            if (CanMove(-1,0)) {
+                _mino.MoveLeft();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E)) {
+            _mino.RotateRight();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            _mino.RotateLeft();
+        }
+
         currentTime += Time.deltaTime;
 
         if(currentTime > span){
 
-            // 新しいミノを作成
-            if (now) {
-                foreach (MinoPiece piece in _mino.GetMinoPieces()) {
-                    _board.Add(piece);
-                }
+            // ミノが移動中でなければ
+            if (!moveNow) {
+                // 新しいミノを作成
                 _mino = _minoFactory.CreateJMino();
-                now = false;
-
-                List<Vector2Int> poss = _mino.GetPiecePositions();
-                _minoViews.Clear();
-                foreach(Vector2Int indexPos in poss) {
-                    Vector2 pos = GetPosition(indexPos);
+                foreach (MinoPiece piece in _mino.GetMinoPieces()) {
                     GameObject copy = Instantiate(_minoViewPrefab);
-                    copy.transform.position = pos;
-                    _minoViews.Add(copy);
+                    // MinoPieceのポジションを変更したとき，Viewを更新
+                    piece.WhenPositionChange.Subscribe(position => {
+                        Vector2 pos = GetPosition(position);
+                        copy.transform.position = pos;
+                    });
                 }
+                moveNow = true;
             }
 
             currentTime = 0f;
-            // gameObject.transform.position = _displayMinoService.GetPosition(gameObject.transform.position);
 
-            List<Vector2Int> positions = _mino.GetPiecePositions();
-            foreach(Vector2Int indexPos in positions) {
-                if (!_board.CheckBoundary(indexPos.x, indexPos.y-1)) {
-                    now = true;
-                    return;
+            // Can Move Down?
+            if (!CanMove(0,-1)) {
+                moveNow = false;
+                // 盤面に固定
+                foreach (MinoPiece piece in _mino.GetMinoPieces()) {
+                    _board.Add(piece);
                 }
-                if (_board.Exists(indexPos.x, indexPos.y-1)) {
-                    now = true;
-                    return;
-                }
+                return;
             }
 
             _mino.MoveDown();
-
-            positions = _mino.GetPiecePositions();
-
-            for (int i = 0; i < _minoViews.Count; i++) {
-                _minoViews[i].transform.position = GetPosition(positions[i]);
-            }
         }
     }
 
@@ -93,5 +93,19 @@ public class Sample : MonoBehaviour
         float y = indexPos.y * 0.16f;
 
         return new Vector2(x + xBegin, y + yBegin);
+    }
+
+    public bool CanMove(int distX, int distY)
+    {
+        List<Vector2Int> positions = _mino.GetPiecePositions();
+        foreach(Vector2Int indexPos in positions) {
+            if (!_board.CheckBoundary(indexPos.x + distX, indexPos.y + distY)) {
+                return false;
+            }
+            if (_board.Exists(indexPos.x + distX, indexPos.y + distY)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

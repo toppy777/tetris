@@ -18,5 +18,21 @@ namespace Tetris.Scripts.Domains.Minos
         {
             return _list[_index];
         }
+
+        public void Next()
+        {
+            _index++;
+            if (_index == _list.Count) {
+                _index = 0;
+            }
+        }
+
+        public void Prev()
+        {
+            _index--;
+            if (_index < 0) {
+                _index = _list.Count-1;
+            }
+        }
     }
 }

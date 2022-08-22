@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="uuJcWk0A7ma4OqOna5Vn" name="Page-1">
-        <mxGraphModel dx="1305" dy="861" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="732" dy="575" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -101,7 +101,7 @@
                 <mxCell id="48" value="Minos" style="swimlane;" parent="1" vertex="1">
                     <mxGeometry x="320" y="580" width="480" height="410" as="geometry"/>
                 </mxCell>
-                <mxCell id="72" value="0..n" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="48">
+                <mxCell id="72" value="0..n" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="48" vertex="1">
                     <mxGeometry x="30" y="300" width="30" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="58" style="edgeStyle=none;html=1;endArrow=diamond;endFill=1;endSize=12;" parent="1" source="31" target="41" edge="1">
@@ -145,30 +145,30 @@
                 <mxCell id="67" value="aaa" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="66" vertex="1">
                     <mxGeometry y="30" width="140" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="68" value="&lt;div&gt;&lt;span style=&quot;font-size: 10px&quot;&gt;・Minoのリストを持つ&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 10px&quot;&gt;・Minoを管理する&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;align=left;" vertex="1" parent="1">
+                <mxCell id="68" value="&lt;div&gt;&lt;span style=&quot;font-size: 10px&quot;&gt;・Minoのリストを持つ&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 10px&quot;&gt;・Minoを管理する&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;align=left;" parent="1" vertex="1">
                     <mxGeometry x="160" y="392.5" width="140" height="95" as="geometry"/>
                 </mxCell>
-                <mxCell id="70" value="" style="endArrow=none;dashed=1;html=1;fontSize=10;" edge="1" parent="1" source="68" target="11">
+                <mxCell id="70" value="" style="endArrow=none;dashed=1;html=1;fontSize=10;" parent="1" source="68" target="11" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="270" y="436.97916666666674" as="sourcePoint"/>
                         <mxPoint x="370" y="438.02083333333326" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="73" value="Game" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
-                    <mxGeometry x="380" y="160" width="140" height="60" as="geometry">
+                <mxCell id="73" value="Game" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="80" width="140" height="60" as="geometry">
                         <mxRectangle x="190" y="250" width="60" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="74" value="minos" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="73">
+                <mxCell id="74" value="InGameNow" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="73" vertex="1">
                     <mxGeometry y="30" width="140" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="75" value="&lt;span style=&quot;font-size: 10px&quot;&gt;・Minoの動きを制御する&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;align=left;" vertex="1" parent="1">
+                <mxCell id="75" value="&lt;span style=&quot;font-size: 10px&quot;&gt;・Minoの動きを制御する&lt;br&gt;・ゲーム中かどうか&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;align=left;" parent="1" vertex="1">
                     <mxGeometry x="160" y="130" width="140" height="95" as="geometry"/>
                 </mxCell>
-                <mxCell id="76" value="Boards" style="swimlane;" vertex="1" parent="1">
+                <mxCell id="76" value="Boards" style="swimlane;" parent="1" vertex="1">
                     <mxGeometry x="320" y="310" width="260" height="240" as="geometry"/>
                 </mxCell>
-                <mxCell id="77" value="0..n" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="76">
+                <mxCell id="77" value="0..n" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="76" vertex="1">
                     <mxGeometry x="30" y="300" width="30" height="20" as="geometry"/>
                 </mxCell>
             </root>
