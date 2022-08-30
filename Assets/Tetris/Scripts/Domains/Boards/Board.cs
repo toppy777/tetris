@@ -13,7 +13,7 @@ namespace Tetris.Scripts.Domains.Boards
         public Board()
         {
             _xMax = 10-1;
-            _yMax = 20-1;
+            _yMax = 24;
             _minoPieces = new MinoPiece[_xMax+1, _yMax+1];
         }
 
@@ -21,6 +21,10 @@ namespace Tetris.Scripts.Domains.Boards
         {
             Vector2Int pos = piece.GetPosition();
             _minoPieces[pos.x, pos.y] = piece;
+
+            if (pos.y > 19) {
+                Debug.Log("Game Over");
+            }
 
             // 横一行そろったか
             bool flg = true;

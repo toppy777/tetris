@@ -5,7 +5,7 @@ namespace Tetris.Scripts.Domains.Minos
 {
     public class MinoFactory
     {
-        Vector2Int defaultPos = new Vector2Int(3, 18);
+        Vector2Int defaultPos = new Vector2Int(3, 21);
 
         public List<Mino> CreateMinos()
         {

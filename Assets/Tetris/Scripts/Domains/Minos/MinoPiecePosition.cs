@@ -15,7 +15,7 @@ namespace Tetris.Scripts.Domains.Minos
         }
         private const int MinValue = 0;
         private const int XMaxValue = 10 - 1;
-        private const int YMaxValue = 20 - 1;
+        private const int YMaxValue = 24;
 
         public MinoPiecePosition(int x, int y)
         {
