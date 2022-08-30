@@ -37,10 +37,10 @@ namespace Tetris.Scripts.Domains.Minos
                 new Vector2Int(2,1)
             },
             new List<Vector2Int> {
-                new Vector2Int(0,1),
                 new Vector2Int(1,0),
+                new Vector2Int(0,1),
                 new Vector2Int(1,1),
-                new Vector2Int(2,0)
+                new Vector2Int(0,2)
             },
         };
 
@@ -53,9 +53,9 @@ namespace Tetris.Scripts.Domains.Minos
             },
             new List<Vector2Int> {
                 new Vector2Int(0,0),
-                new Vector2Int(1,0),
+                new Vector2Int(0,1),
                 new Vector2Int(1,1),
-                new Vector2Int(2,1)
+                new Vector2Int(1,2)
             },
         };
 
@@ -94,22 +94,22 @@ namespace Tetris.Scripts.Domains.Minos
                 new Vector2Int(2,1)
             },
             new List<Vector2Int> {
-                new Vector2Int(1,0),
-                new Vector2Int(1,1),
-                new Vector2Int(0,2),
-                new Vector2Int(1,2)
-            },
-            new List<Vector2Int> {
-                new Vector2Int(0,0),
-                new Vector2Int(1,0),
-                new Vector2Int(2,0),
-                new Vector2Int(2,1)
-            },
-            new List<Vector2Int> {
                 new Vector2Int(0,0),
                 new Vector2Int(1,0),
                 new Vector2Int(0,1),
                 new Vector2Int(0,2)
+            },
+            new List<Vector2Int> {
+                new Vector2Int(0,0),
+                new Vector2Int(0,1),
+                new Vector2Int(1,1),
+                new Vector2Int(2,1)
+            },
+            new List<Vector2Int> {
+                new Vector2Int(1,0),
+                new Vector2Int(1,1),
+                new Vector2Int(0,2),
+                new Vector2Int(1,2)
             },
         };
 
@@ -124,7 +124,7 @@ namespace Tetris.Scripts.Domains.Minos
                 new Vector2Int(0,0),
                 new Vector2Int(0,1),
                 new Vector2Int(1,1),
-                new Vector2Int(0,0)
+                new Vector2Int(0,2)
             },
             new List<Vector2Int> {
                 new Vector2Int(1,0),

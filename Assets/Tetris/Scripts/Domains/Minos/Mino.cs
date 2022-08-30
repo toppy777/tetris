@@ -8,8 +8,11 @@ namespace Tetris.Scripts.Domains.Minos
 {
     public class Mino
     {
-        private readonly List<MinoPiece> _pieces;
+        private List<MinoPiece> _pieces;
         private MinoPiecePosition _position;
+        public MinoPiecePosition Position {
+            get { return _position; }
+        }
         private readonly MinoShapePattens _shapePattens;
 
         public Mino(List<List<Vector2Int>> shapePattens, MinoPieceColor color, Vector2Int position)
@@ -31,6 +34,11 @@ namespace Tetris.Scripts.Domains.Minos
                 list.Add(piece.GetPosition());
             }
             return list;
+        }
+
+        public List<Vector2Int> GetShape()
+        {
+            return _shapePattens.GetShape();
         }
 
         public void MoveDown()
@@ -55,6 +63,15 @@ namespace Tetris.Scripts.Domains.Minos
                 piece.MoveLeft();
             }
             _position.Change(_position.X-1, _position.Y);
+        }
+
+        public void MoveTo(List<Vector2Int> piecePositions)
+        {
+            for (int i = 0; i < piecePositions.Count; i++) {
+                _pieces[i].ChangePosition(piecePositions[i].x, piecePositions[i].y);
+            }
+            int yMin = piecePositions.Select(pos => pos.y).ToList().Min();
+            _position.Change(_position.X, yMin);
         }
 
         public void RotateRight()
@@ -89,6 +106,11 @@ namespace Tetris.Scripts.Domains.Minos
         public List<MinoPiece> GetMinoPieces()
         {
             return _pieces;
+        }
+
+        public void DeletePiece(MinoPiece piece)
+        {
+            _pieces.Remove(piece);
         }
     }
 }

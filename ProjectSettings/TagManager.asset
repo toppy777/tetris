@@ -44,6 +44,9 @@ TagManager:
   - name: Background
     uniqueID: 1367146805
     locked: 0
+  - name: MinoShadow
+    uniqueID: 2297220159
+    locked: 0
   - name: Mino
     uniqueID: 2358765935
     locked: 0

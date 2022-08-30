@@ -16,7 +16,6 @@ namespace Tetris.Scripts.Domains.Minos
             _whenPositionChange = new Subject<Vector2Int>();
         }
 
-        // TODO: Vector2Intにしたい
         private readonly Subject<Vector2Int> _whenPositionChange;
         public IObservable<Vector2Int> WhenPositionChange => _whenPositionChange;
 
@@ -48,6 +47,7 @@ namespace Tetris.Scripts.Domains.Minos
         public void ChangePosition(int x, int y)
         {
             _position.Value.Change(x,y);
+            _whenPositionChange.OnNext(new Vector2Int(_position.Value.X, _position.Value.Y));
         }
     }
 }

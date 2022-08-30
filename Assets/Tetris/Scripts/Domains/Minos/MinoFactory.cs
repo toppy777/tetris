@@ -7,6 +7,19 @@ namespace Tetris.Scripts.Domains.Minos
     {
         Vector2Int defaultPos = new Vector2Int(3, 18);
 
+        public List<Mino> CreateMinos()
+        {
+            return new List<Mino>(){
+                CreateIMino(),
+                CreateJMino(),
+                CreateLMino(),
+                CreateOMino(),
+                CreateSMino(),
+                CreateTMino(),
+                CreateZMino()
+            };
+        }
+
         public Mino CreateIMino()
         {
             List<List<Vector2Int>> shapePatten = MinoShapeType.I;
