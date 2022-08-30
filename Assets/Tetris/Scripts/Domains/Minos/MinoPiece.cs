@@ -7,9 +7,9 @@ namespace Tetris.Scripts.Domains.Minos
     public class MinoPiece
     {
         private readonly ReactiveProperty<MinoPiecePosition> _position = new();
-        private readonly MinoPieceColor _color;
+        private readonly MinoPieceColor.Color _color;
 
-        public MinoPiece(int x, int y, MinoPieceColor color)
+        public MinoPiece(int x, int y, MinoPieceColor.Color color)
         {
             _position.Value = new MinoPiecePosition(x,y);
             _color = color;
@@ -48,6 +48,11 @@ namespace Tetris.Scripts.Domains.Minos
         {
             _position.Value.Change(x,y);
             _whenPositionChange.OnNext(new Vector2Int(_position.Value.X, _position.Value.Y));
+        }
+
+        public MinoPieceColor.Color GetColor()
+        {
+            return _color;
         }
     }
 }

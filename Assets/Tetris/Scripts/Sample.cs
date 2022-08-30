@@ -106,6 +106,7 @@ public class Sample : MonoBehaviour
                 // ■ ミノViewを作って、通知購読
                 foreach (MinoPiece piece in _mino.GetMinoPieces()) {
                     GameObject copy = GameObject.Instantiate(_minoViewPrefab);
+                    copy.GetComponent<Renderer>().material.color = MinoPieceColor.GetColor(piece.GetColor());
                     // MinoPieceのポジションを変更したとき，Viewを更新
                     piece.WhenPositionChange.Subscribe(position => {
                         Vector2 pos = GetPosition(position);

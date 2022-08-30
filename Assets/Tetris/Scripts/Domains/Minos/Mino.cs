@@ -15,7 +15,7 @@ namespace Tetris.Scripts.Domains.Minos
         }
         private readonly MinoShapePattens _shapePattens;
 
-        public Mino(List<List<Vector2Int>> shapePattens, MinoPieceColor color, Vector2Int position)
+        public Mino(List<List<Vector2Int>> shapePattens, MinoPieceColor.Color color, Vector2Int position)
         {
             _pieces = new List<MinoPiece>();
             _position = new MinoPiecePosition(position.x, position.y);
