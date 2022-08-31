@@ -31,5 +31,17 @@ namespace Tetris.Scripts.Domains.Boards
             }
             return true;
         }
+
+        /// <summary>
+        /// 与えられたMinoとシェイプをもとにそのミノが利用可能なスペースがあるかチェックする
+        /// </summary>
+        public bool HasSpaceForMino(Board board, Mino mino, List<Vector2Int> shapes) {
+            foreach (Vector2Int shape in shapes) {
+                if (!board.IsAvailable(shape.x + mino.Position.X, shape.y + mino.Position.Y)) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

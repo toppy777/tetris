@@ -34,5 +34,21 @@ namespace Tetris.Scripts.Domains.Minos
                 _index = _list.Count-1;
             }
         }
+
+        public List<Vector2Int> GetNextShape()
+        {
+            Next();
+            List<Vector2Int> shape = GetShape();
+            Prev();
+            return shape;
+        }
+
+        public List<Vector2Int> GetPrevShape()
+        {
+            Prev();
+            List<Vector2Int> shape = GetShape();
+            Next();
+            return shape;
+        }
     }
 }

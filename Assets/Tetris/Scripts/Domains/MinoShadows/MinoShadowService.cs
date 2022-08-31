@@ -20,21 +20,13 @@ namespace Tetris.Scripts.Domains.MinoShadows
         /// </summary>
         public List<Vector2Int> GetMinoShadowPositions(Board board, Mino mino)
         {
+            // TODO: もっと汎用的なクラスに移動した方が良い
             for (int y = 0; y < mino.Position.Y; y++) {
                 if (_boardService.HasSpaceForMino(board, mino, new Vector2Int(mino.Position.X, y))) {
-                    return GetMinoPiecePositions(mino, mino.Position.X, y);
+                    return mino.GetPiecePositionsAt(mino.Position.X, y);
                 }
             }
             return null;
-        }
-
-        private List<Vector2Int> GetMinoPiecePositions(Mino mino, int posX, int posY)
-        {
-            var list = new List<Vector2Int>();
-            foreach (Vector2Int shape in mino.GetShape()) {
-                list.Add(new Vector2Int(shape.x + posX, shape.y + posY));
-            }
-            return list;
         }
     }
 }

@@ -6,53 +6,41 @@ namespace Tetris.Scripts.Domains.Minos
 {
     public class MinoPiece
     {
-        private readonly ReactiveProperty<MinoPiecePosition> _position = new();
-        private readonly MinoPieceColor.Color _color;
-
-        public MinoPiece(int x, int y, MinoPieceColor.Color color)
-        {
-            _position.Value = new MinoPiecePosition(x,y);
-            _color = color;
-            _whenPositionChange = new Subject<Vector2Int>();
+        private readonly MinoPiecePosition _position;
+        public int X {
+            get { return _position.X; }
+        }
+        public int Y {
+            get { return _position.Y; }
         }
 
-        private readonly Subject<Vector2Int> _whenPositionChange;
-        public IObservable<Vector2Int> WhenPositionChange => _whenPositionChange;
+        Subject<Vector2Int> _whenChangePosition;
+        public IObservable<Vector2Int> WhenChangePosition => _whenChangePosition;
 
-        public void Move(MinoPiecePosition position) => _position.Value = position;
+        Subject<Unit> _whenDelete;
+        public IObservable<Unit> WhenDelete => _whenDelete;
 
-        public void MoveDown()
+        public MinoPiece(int x, int y)
         {
-            _position.Value.Change(_position.Value.X, _position.Value.Y-1);
-            _whenPositionChange.OnNext(new Vector2Int(_position.Value.X, _position.Value.Y));
-        }
-
-        public void MoveRight()
-        {
-            _position.Value.Change(_position.Value.X+1, _position.Value.Y);
-            _whenPositionChange.OnNext(new Vector2Int(_position.Value.X, _position.Value.Y));
-        }
-
-        public void MoveLeft()
-        {
-            _position.Value.Change(_position.Value.X-1, _position.Value.Y);
-            _whenPositionChange.OnNext(new Vector2Int(_position.Value.X, _position.Value.Y));
+            _position = new MinoPiecePosition(x,y);
+            _whenChangePosition = new Subject<Vector2Int>();
+            _whenDelete = new Subject<Unit>();
         }
 
         public Vector2Int GetPosition()
         {
-            return new Vector2Int(_position.Value.X, _position.Value.Y);
+            return new Vector2Int(_position.X, _position.Y);
         }
 
         public void ChangePosition(int x, int y)
         {
-            _position.Value.Change(x,y);
-            _whenPositionChange.OnNext(new Vector2Int(_position.Value.X, _position.Value.Y));
+            _position.Change(x,y);
+            _whenChangePosition.OnNext(new Vector2Int(x,y));
         }
 
-        public MinoPieceColor.Color GetColor()
+        public void Delete()
         {
-            return _color;
+            _whenDelete.OnNext(Unit.Default);
         }
     }
 }

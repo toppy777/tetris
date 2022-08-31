@@ -15,6 +15,11 @@ namespace Tetris.Scripts.Domains.Minos
         }
         private readonly MinoShapePattens _shapePattens;
 
+        MinoPieceColor.Color _color;
+        public MinoPieceColor.Color Color {
+            get { return _color; }
+        }
+
         public Mino(List<List<Vector2Int>> shapePattens, MinoPieceColor.Color color, Vector2Int position)
         {
             _pieces = new List<MinoPiece>();
@@ -22,9 +27,15 @@ namespace Tetris.Scripts.Domains.Minos
             _shapePattens = new MinoShapePattens(shapePattens);
             List<Vector2Int> shape = _shapePattens.GetShape();
             foreach (Vector2Int pos in shape) {
-                var piece = new MinoPiece(pos.x + position.x, pos.y + position.y, color);
+                var piece = new MinoPiece(pos.x + position.x, pos.y + position.y);
                 _pieces.Add(piece);
             }
+            _color = color;
+        }
+
+        public List<MinoPiece> GetPieces()
+        {
+            return _pieces;
         }
 
         public List<Vector2Int> GetPiecePositions()
@@ -36,33 +47,18 @@ namespace Tetris.Scripts.Domains.Minos
             return list;
         }
 
+        public List<Vector2Int> GetPiecePositionsAt(int posX, int posY)
+        {
+            var list = new List<Vector2Int>();
+            foreach (Vector2Int shape in GetShape()) {
+                list.Add(new Vector2Int(shape.x + posX, shape.y + posY));
+            }
+            return list;
+        }
+
         public List<Vector2Int> GetShape()
         {
             return _shapePattens.GetShape();
-        }
-
-        public void MoveDown()
-        {
-            foreach (MinoPiece piece in _pieces) {
-                piece.MoveDown();
-            }
-            _position.Change(_position.X, _position.Y-1);
-        }
-
-        public void MoveRight()
-        {
-            foreach (MinoPiece piece in _pieces) {
-                piece.MoveRight();
-            }
-            _position.Change(_position.X+1, _position.Y);
-        }
-
-        public void MoveLeft()
-        {
-            foreach (MinoPiece piece in _pieces) {
-                piece.MoveLeft();
-            }
-            _position.Change(_position.X-1, _position.Y);
         }
 
         public void MoveTo(List<Vector2Int> piecePositions)
@@ -70,47 +66,92 @@ namespace Tetris.Scripts.Domains.Minos
             for (int i = 0; i < piecePositions.Count; i++) {
                 _pieces[i].ChangePosition(piecePositions[i].x, piecePositions[i].y);
             }
+            int xMin = piecePositions.Select(pos => pos.x).ToList().Min();
             int yMin = piecePositions.Select(pos => pos.y).ToList().Min();
-            _position.Change(_position.X, yMin);
+            ChangePosition(xMin, yMin);
+        }
+
+        public void MoveTo(int x, int y)
+        {
+            ChangePosition(x,y);
         }
 
         public void RotateRight()
         {
             _shapePattens.Next();
-            List<Vector2Int> shape = _shapePattens.GetShape();
-            for (int i = 0; i < _pieces.Count; i++) {
-                _pieces[i].ChangePosition(shape[i].x + _position.X, shape[i].y + _position.Y);
-            }
+            ChangeShape();
         }
 
         public void RotateLeft()
         {
             _shapePattens.Prev();
-            List<Vector2Int> shape = _shapePattens.GetShape();
+            ChangeShape();
+        }
+
+        private void ChangePosition(int x, int y)
+        {
+            _position.Change(x,y);
+            List<Vector2Int> piecePositions = GetPiecePositionsAt(_position.X, _position.Y);
             for (int i = 0; i < _pieces.Count; i++) {
-                _pieces[i].ChangePosition(shape[i].x + _position.X, shape[i].y + _position.Y);
+                _pieces[i].ChangePosition(piecePositions[i].x, piecePositions[i].y);
             }
         }
 
-        public bool ExitsMinoPiece(int x, int y)
+        private void ChangeShape()
+        {
+            List<Vector2Int> piecePositions = GetPiecePositionsAt(_position.X, _position.Y);
+            for (int i = 0; i < _pieces.Count; i++) {
+                _pieces[i].ChangePosition(piecePositions[i].x, piecePositions[i].y);
+            }
+        }
+
+        public List<IObservable<Vector2Int>> GetWhenChangePositionObservables()
+        {
+            var list = new List<IObservable<Vector2Int>>();
+            foreach (MinoPiece piece in _pieces) {
+                list.Add(piece.WhenChangePosition);
+            }
+            return list;
+        }
+
+        public List<IObservable<Unit>> GetWhenDeleteObservables()
+        {
+            var list = new List<IObservable<Unit>>();
+            foreach (MinoPiece piece in _pieces) {
+                list.Add(piece.WhenDelete);
+            }
+            return list;
+        }
+
+        public void RemoveAt(int x, int y)
         {
             foreach (MinoPiece piece in _pieces) {
-                Vector2Int indexPos = piece.GetPosition();
-                if (x == indexPos.x && y == indexPos.y) {
-                    return true;
+                if (piece.X == x && piece.Y == y) {
+                    piece.Delete();
+                    _pieces.Remove(piece);
+
+                    if (_pieces.Count == 0) {
+                        return;
+                    }
+
+                    // ポジジョン変更
+                    int xMin = _pieces.Select(piece => piece.X).ToList().Min();
+                    int yMin = _pieces.Select(piece => piece.Y).ToList().Min();
+                    _position.Change(xMin, yMin);
+
+                    return;
                 }
             }
-            return false;
         }
 
-        public List<MinoPiece> GetMinoPieces()
+        public List<Vector2Int> GetNextShape()
         {
-            return _pieces;
+            return _shapePattens.GetNextShape();
         }
 
-        public void DeletePiece(MinoPiece piece)
+        public List<Vector2Int> GetPrevShape()
         {
-            _pieces.Remove(piece);
+            return _shapePattens.GetPrevShape();
         }
     }
 }

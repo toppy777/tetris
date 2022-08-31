@@ -8,46 +8,92 @@ namespace Tetris.Scripts.Domains.Boards
     {
         private readonly int _xMax;
         private readonly int _yMax;
-        MinoPiece[,] _minoPieces;
+        MinoPiece[,] _piecesList;
 
         public Board()
         {
             _xMax = 10-1;
             _yMax = 24;
-            _minoPieces = new MinoPiece[_xMax+1, _yMax+1];
+            _piecesList = new MinoPiece[_xMax+1, _yMax+1];
         }
 
-        public void Add(MinoPiece piece)
+        public void Add(Mino mino)
         {
-            Vector2Int pos = piece.GetPosition();
-            _minoPieces[pos.x, pos.y] = piece;
-
-            if (pos.y > 19) {
-                Debug.Log("Game Over");
+            // MinoをPlacedMinoに変換して追加
+            foreach (MinoPiece piece in mino.GetPieces()){
+                if (piece.Y > 19) {
+                    Debug.Log("Game Over!");
+                }
+                _piecesList[piece.X, piece.Y] = piece;
             }
 
-            // 横一行そろったか
-            bool flg = true;
-            for (int x = 0; x <= _xMax; x++) {
-                if (IsEmpty(x, pos.y)) {
-                    flg = false;
+            int y = 0;
+            while(y <= _yMax) {
+                // 横一行そろったか
+                if (CheckCompleteRow(y)) {
+                    RemoveRow(y);
+                    // そろった行の一段上からすべてのオブジェクトを一段下げる
+                    for (int yy = y + 1; yy <= _yMax - 4; yy++) {
+                        MoveDownRow(yy);
+                    }
+                } else {
+                    y++;
                 }
             }
-            if (flg) {
-                Debug.Log($"{pos.y}行目 そろった");
-                // その行全消し
-                // for (int x = 0; x <= _xMax; x++) {
-                //     _minoPieces[x, pos.y] = null;
-                // }
+        }
+
+        public bool CheckCompleteRow(int y)
+        {
+            for (int x = 0; x <= _xMax; x++) {
+                if (IsEmptyAt(x,y)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void RemoveRow(int y)
+        {
+            for (int x = 0; x <= _xMax; x++) {
+                _piecesList[x,y].Delete();
+                _piecesList[x,y] = null;
             }
         }
 
-        public bool IsEmpty(int x, int y)
+        public void MoveDownRow(int y)
         {
-            return _minoPieces[x,y] == null;
+            for (int x = 0; x <= _xMax; x++) {
+                if (IsEmptyAt(x,y)) {
+                    continue;
+                }
+                _piecesList[x,y].ChangePosition(_piecesList[x,y].X, _piecesList[x,y].Y-1);
+                _piecesList[x,y-1] = _piecesList[x,y];
+                _piecesList[x,y] = null;
+            }
         }
 
-        public bool CheckBoundary(int x, int y)
+        public void DisplayConsole()
+        {
+            string data = "";
+            for (int y = _yMax; y >= 0; y--) {
+                for (int x = 0; x <= _xMax; x++) {
+                    if (IsEmptyAt(x,y)) {
+                        data += "○";
+                    } else {
+                        data += "●";
+                    }
+                }
+                data += "\n";
+            }
+            Debug.Log(data);
+        }
+
+        public bool IsEmptyAt(int x, int y)
+        {
+            return _piecesList[x,y] == null;
+        }
+
+        public bool CheckBoundaryAt(int x, int y)
         {
             if (x < 0) {
                 return false;
@@ -67,8 +113,8 @@ namespace Tetris.Scripts.Domains.Boards
 
         public bool IsAvailable(int x, int y)
         {
-            if (CheckBoundary(x, y)) {
-                if (IsEmpty(x, y)) {
+            if (CheckBoundaryAt(x, y)) {
+                if (IsEmptyAt(x, y)) {
                     return true;
                 }
             }
