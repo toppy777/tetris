@@ -1,7 +1,8 @@
 using UnityEngine;
+using System;
+using UniRx;
 using Tetris.Scripts.Domains.Minos;
-using System.Collections.Generic;
-
+using Tetris.Scripts.Domains.MinoPieces;
 namespace Tetris.Scripts.Domains.Boards
 {
     public class Board
@@ -9,6 +10,9 @@ namespace Tetris.Scripts.Domains.Boards
         private readonly int _xMax;
         private readonly int _yMax;
         MinoPiece[,] _piecesList;
+
+        Subject<Unit> _whenPieceCrossOver = new();
+        public IObservable<Unit> WhenPieceCrossOver => _whenPieceCrossOver;
 
         public Board()
         {
@@ -22,7 +26,7 @@ namespace Tetris.Scripts.Domains.Boards
             // MinoをPlacedMinoに変換して追加
             foreach (MinoPiece piece in mino.GetPieces()){
                 if (piece.Y > 19) {
-                    Debug.Log("Game Over!");
+                    _whenPieceCrossOver.OnNext(Unit.Default);
                 }
                 _piecesList[piece.X, piece.Y] = piece;
             }

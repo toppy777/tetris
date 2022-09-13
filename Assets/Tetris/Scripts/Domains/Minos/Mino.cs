@@ -3,34 +3,72 @@ using System.Collections.Generic;
 using UniRx;
 using System;
 using System.Linq;
+using Tetris.Scripts.Domains.MinoTypes;
+using Tetris.Scripts.Domains.MinoShapes;
+using Tetris.Scripts.Domains.MinoColors;
+using Tetris.Scripts.Domains.Positions;
+using Tetris.Scripts.Domains.MinoPieces;
 
 namespace Tetris.Scripts.Domains.Minos
 {
     public class Mino
     {
         private List<MinoPiece> _pieces;
-        private MinoPiecePosition _position;
-        public MinoPiecePosition Position {
+        private Position _position;
+        public Position Position {
             get { return _position; }
         }
-        private readonly MinoShapePattens _shapePattens;
 
-        MinoPieceColor.Color _color;
-        public MinoPieceColor.Color Color {
-            get { return _color; }
+        private MinoType _minoType;
+        public MinoType MinoType {
+            get { return _minoType; }
         }
 
-        public Mino(List<List<Vector2Int>> shapePattens, MinoPieceColor.Color color, Vector2Int position)
+        private MinoShape _shape;
+        private MinoColor _color;
+        public Color32 Color {
+            get { return _color.Value; }
+        }
+
+        Subject<Color32> _whenMinoSet;
+        public IObservable<Color32> WhenMinoSet => _whenMinoSet;
+
+        public Mino(MinoShape minoShape, MinoColor minoColor, Vector2Int position, MinoType minoType)
         {
+            _shape = minoShape;
             _pieces = new List<MinoPiece>();
-            _position = new MinoPiecePosition(position.x, position.y);
-            _shapePattens = new MinoShapePattens(shapePattens);
-            List<Vector2Int> shape = _shapePattens.GetShape();
-            foreach (Vector2Int pos in shape) {
+            List<Vector2Int> s = _shape.GetShape();
+            foreach (Vector2Int pos in s) {
                 var piece = new MinoPiece(pos.x + position.x, pos.y + position.y);
                 _pieces.Add(piece);
             }
-            _color = color;
+            _color = minoColor;
+            _position = new Position(position.x, position.y);
+            _minoType = minoType;
+            _whenMinoSet = new Subject<Color32>();
+        }
+
+        public void Set(Mino mino)
+        {
+            _pieces = mino._pieces;
+            _position = mino._position;
+            _minoType = mino._minoType;
+            _shape = mino._shape;
+            _color = mino._color;
+            _whenMinoSet.OnNext(mino._color.Value);
+        }
+
+        public void Release()
+        {
+            _pieces = null;
+            _position = null;
+            _shape = null;
+            _color = null;
+        }
+        
+        public bool Exists()
+        {
+            return _pieces != null;
         }
 
         public List<MinoPiece> GetPieces()
@@ -58,7 +96,7 @@ namespace Tetris.Scripts.Domains.Minos
 
         public List<Vector2Int> GetShape()
         {
-            return _shapePattens.GetShape();
+            return _shape.GetShape();
         }
 
         public void MoveTo(List<Vector2Int> piecePositions)
@@ -78,13 +116,13 @@ namespace Tetris.Scripts.Domains.Minos
 
         public void RotateRight()
         {
-            _shapePattens.Next();
+            _shape.Next();
             ChangeShape();
         }
 
         public void RotateLeft()
         {
-            _shapePattens.Prev();
+            _shape.Prev();
             ChangeShape();
         }
 
@@ -146,12 +184,20 @@ namespace Tetris.Scripts.Domains.Minos
 
         public List<Vector2Int> GetNextShape()
         {
-            return _shapePattens.GetNextShape();
+            return _shape.GetNextShape();
         }
 
         public List<Vector2Int> GetPrevShape()
         {
-            return _shapePattens.GetPrevShape();
+            return _shape.GetPrevShape();
+        }
+
+        public void Delete()
+        {
+            for (int i = 0; i < 4; i++) {
+                _pieces[i].Delete();
+            }
+            _pieces.Clear();
         }
     }
 }

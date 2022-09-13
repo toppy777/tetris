@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using UniRx;
 using System;
-using Tetris.Scripts.Domains.Minos;
+using Tetris.Scripts.Domains.Positions;
 
 namespace Tetris.Scripts.Domains.MinoShadows
 {
     public class MinoShadow
     {
-        List<MinoPiecePosition> _piecePositions;
+        List<Position> _piecePositions;
         Subject<List<Vector2Int>> _whenPositionsChange;
         public IObservable<List<Vector2Int>> WhenPositionsChange => _whenPositionsChange;
         ReactiveProperty<bool> _displayFlg;
@@ -16,7 +16,7 @@ namespace Tetris.Scripts.Domains.MinoShadows
 
         public MinoShadow()
         {
-            _piecePositions = new List<MinoPiecePosition>();
+            _piecePositions = new List<Position>();
             _whenPositionsChange = new Subject<List<Vector2Int>>();
             _displayFlg = new ReactiveProperty<bool>();
         }
@@ -25,7 +25,7 @@ namespace Tetris.Scripts.Domains.MinoShadows
         {
             _piecePositions.Clear();
             foreach (Vector2Int pos in piecePositions) {
-                _piecePositions.Add(new MinoPiecePosition(pos.x, pos.y));
+                _piecePositions.Add(new Position(pos.x, pos.y));
             }
             _whenPositionsChange.OnNext(GetPositions());
         }
@@ -33,7 +33,7 @@ namespace Tetris.Scripts.Domains.MinoShadows
         public List<Vector2Int> GetPositions()
         {
             var list = new List<Vector2Int>();
-            foreach (MinoPiecePosition pos in _piecePositions) {
+            foreach (Position pos in _piecePositions) {
                 list.Add(new Vector2Int(pos.X, pos.Y));
             }
             return list;
