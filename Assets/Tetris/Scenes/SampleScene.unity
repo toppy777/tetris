@@ -1470,7 +1470,9 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  _prefabs: {fileID: 11400000, guid: f4cae513b96a1614e86b9f2b5059334d, type: 2}
   _minoPieceViewPrefab: {fileID: -2135529676207765082, guid: 2fb4a72777749154ca368bff081740e2, type: 3}
+  _finishCanvasViewPrefab: {fileID: 500790577642909874, guid: f7d4dd7b37c976a4983ef5d57e9f7b67, type: 3}
 --- !u!1 &550011563
 GameObject:
   m_ObjectHideFlags: 0

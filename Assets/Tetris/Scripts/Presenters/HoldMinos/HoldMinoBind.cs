@@ -8,9 +8,9 @@ using Tetris.Scripts.Domains.MinoColors;
 
 namespace Tetris.Scripts.Presenters.HoldMinos
 {
-    public class HoldMinoPresenter
+    public class HoldMinoBind
     {
-        public HoldMinoPresenter(
+        public HoldMinoBind(
             HoldMino holdMino,
             MinoPieceView minoPieceViewPrefab
         )

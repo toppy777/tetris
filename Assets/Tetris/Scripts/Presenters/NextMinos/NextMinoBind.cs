@@ -9,11 +9,11 @@ using Tetris.Scripts.Domains.MinoColors;
 
 namespace Tetris.Scripts.Presenters.NextMinos
 {
-    public class NextMinoPresenter : IDisposable
+    public class NextMinoBind : IDisposable
     {
         private readonly CompositeDisposable _disposable = new();
 
-        public NextMinoPresenter(
+        public NextMinoBind(
             MinoReserveList minoReserveList,
             MinoPieceView minoPieceView
         )

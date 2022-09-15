@@ -1,16 +1,16 @@
+using UnityEngine;
 using Tetris.Scripts.Domains.Minos;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UniRx;
 
 namespace Tetris.Scripts.Presenters.Minos
 {
-    public class MinoPresenter : IDisposable
+    public class MinoBind : IDisposable
     {
         private readonly CompositeDisposable _disposable = new();
 
-        public MinoPresenter(
+        public MinoBind(
             Mino mino,
             MinoPieceView minoPieceViewPrefab
         ) {
@@ -56,5 +56,6 @@ namespace Tetris.Scripts.Presenters.Minos
         {
             _disposable.Dispose();
         }
+
     }
 }

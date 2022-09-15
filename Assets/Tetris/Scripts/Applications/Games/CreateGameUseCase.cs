@@ -7,9 +7,6 @@ using Tetris.Scripts.Domains.Boards;
 using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Domains.MinoReserves;
 using Tetris.Scripts.Domains.MinoTypes;
-using Tetris.Scripts.Presenters.Minos;
-using Tetris.Scripts.Presenters.NextMinos;
-using Tetris.Scripts.Presenters.HoldMinos;
 
 namespace Tetris.Scripts.Application.Games
 {
@@ -25,10 +22,19 @@ namespace Tetris.Scripts.Application.Games
         MinoReserveList _minoReserveList;
         HoldMino _holdMino;
 
+        IMinoBindFactory _minoBindFactory;
+        INextMinoBindFactory _nextMinoBindFactory;
+        IHoldMinoBindFactory _holdMinoBindFactory;
+        IFinishCanvasView _finishCanvasView;
+
         private readonly CompositeDisposable _disposable = new();
 
         public CreateGameUseCase(
-            MinoPieceView prefab
+            MinoPieceView prefab,
+            IMinoBindFactory minoBindFactory,
+            IFinishCanvasViewFactory finishCanvasViewFactory,
+            INextMinoBindFactory nextMinoBindFactory,
+            IHoldMinoBindFactory holdMinoBindFactory
         )
         {
             _minoPieceViewPrefab = prefab;
@@ -60,6 +66,13 @@ namespace Tetris.Scripts.Application.Games
                     minoShadowPieceViews[i].transform.position = GetPosition(positions[i]);
                 }
             }).AddTo(_disposable);
+
+            _minoBindFactory = minoBindFactory;
+            _nextMinoBindFactory = nextMinoBindFactory;
+            _holdMinoBindFactory = holdMinoBindFactory;
+
+            _finishCanvasView = finishCanvasViewFactory.CreateFinishCanvasView();
+            _finishCanvasView.UnDisplay();
         }
 
         public void Execute()
@@ -70,6 +83,7 @@ namespace Tetris.Scripts.Application.Games
             bool gameOverFlg = false;
             _board.WhenPieceCrossOver.First().Subscribe(_ => {
                 gameOverFlg = true;
+                _finishCanvasView.Display();
                 Debug.Log("Game Over");
             }).AddTo(_disposable);
 
@@ -124,7 +138,7 @@ namespace Tetris.Scripts.Application.Games
                         _mino.Delete();
                         _mino.Release();
                     }
-                    new HoldMinoPresenter(_holdMino, _minoPieceViewPrefab);
+                    _holdMinoBindFactory.CreateHoldMinoBind(_holdMino);
                 }).AddTo(_disposable);
 
             // スクロールした時の処理
@@ -207,8 +221,33 @@ namespace Tetris.Scripts.Application.Games
         public void CreateMino(MinoType minoType)
         {
             _mino = _minoFactory.CreateMino(minoType);
-            new MinoPresenter(_mino, _minoPieceViewPrefab);
-            new NextMinoPresenter(_minoReserveList, _minoPieceViewPrefab);
+            _minoBindFactory.CreateMinoBind(_mino);
+            _nextMinoBindFactory.CreateNextMinoBind(_minoReserveList);
         }
+    }
+
+    public interface IFinishCanvasView
+    {
+        void Display();
+        void UnDisplay();
+        GameObject GetGameObject();
+    }
+
+    public interface IFinishCanvasViewFactory
+    {
+        IFinishCanvasView CreateFinishCanvasView();
+    }
+
+    public interface IMinoBindFactory
+    {
+        void CreateMinoBind(Mino mino);
+    }
+
+    public interface INextMinoBindFactory {
+        void CreateNextMinoBind(MinoReserveList minoReserveList);
+    }
+
+    public interface IHoldMinoBindFactory {
+        void CreateHoldMinoBind(HoldMino holdMino);
     }
 }
