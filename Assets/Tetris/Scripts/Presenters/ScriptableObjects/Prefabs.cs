@@ -1,5 +1,6 @@
 using UnityEngine;
 using Tetris.Scripts.Presenters.FinishCanvas;
+using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Presenters.ScriptableObjects
 {

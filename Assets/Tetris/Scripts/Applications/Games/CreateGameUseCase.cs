@@ -1,12 +1,16 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections.Generic;
 using System;
 using UniRx;
 using Tetris.Scripts.Domains.Minos;
+using Tetris.Scripts.Domains.HoldMinos;
 using Tetris.Scripts.Domains.Boards;
 using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Domains.MinoReserves;
 using Tetris.Scripts.Domains.MinoTypes;
+using UnityEngine.SceneManagement;
+using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Application.Games
 {
@@ -34,10 +38,15 @@ namespace Tetris.Scripts.Application.Games
             IMinoBindFactory minoBindFactory,
             IFinishCanvasViewFactory finishCanvasViewFactory,
             INextMinoBindFactory nextMinoBindFactory,
-            IHoldMinoBindFactory holdMinoBindFactory
+            IHoldMinoBindFactory holdMinoBindFactory,
+            IMinoShadowBindFactory minoShadowBindFactory
         )
         {
             _minoPieceViewPrefab = prefab;
+            _minoBindFactory = minoBindFactory;
+            _nextMinoBindFactory = nextMinoBindFactory;
+            _holdMinoBindFactory = holdMinoBindFactory;
+
             _minoFactory = new MinoFactory();
             _board = new Board();
             _mino = null;
@@ -47,36 +56,23 @@ namespace Tetris.Scripts.Application.Games
             _minoReserveList = new MinoReserveList();
             _holdMino = new HoldMino();
 
-            List<Vector2> posList = new List<Vector2>();
-            for (int i = 0; i < 6; i++) {
-                posList.Add(new Vector2(2.72f, 3.12f - 0.6f * i));
-            }
-
-            // MinoShadowのViewを作成
-            List<MinoPieceView> minoShadowPieceViews = new List<MinoPieceView>();
-            for (int i = 0; i < 4; i++) {
-                MinoPieceView copy = GameObject.Instantiate(_minoPieceViewPrefab);
-                copy.GetComponent<Renderer>().material.color = new Color32(255, 255, 255, 30);
-                minoShadowPieceViews.Add(copy);
-            }
-
-            // MinoShadowのポジション変更通知購読
-            _minoShadow.WhenPositionsChange.Subscribe(positions => {
-                for (int i = 0; i < minoShadowPieceViews.Count; i++) {
-                    minoShadowPieceViews[i].transform.position = GetPosition(positions[i]);
-                }
-            }).AddTo(_disposable);
-
-            _minoBindFactory = minoBindFactory;
-            _nextMinoBindFactory = nextMinoBindFactory;
-            _holdMinoBindFactory = holdMinoBindFactory;
-
             _finishCanvasView = finishCanvasViewFactory.CreateFinishCanvasView();
+            _finishCanvasView.SetRestartButtonClick(() => {
+                // ボードクリア
+                _board.Clear();
+                _mino.Release();
+                _finishCanvasView.UnDisplay();
+                Execute();
+            });
+            _finishCanvasView.SetBackToTitleButton(() => SceneManager.LoadScene("TitleScene"));
             _finishCanvasView.UnDisplay();
+
+            minoShadowBindFactory.CreateMinoShadowBind(_minoShadow);
         }
 
         public void Execute()
         {
+
             CreateNextMino();
 
             // ゲームオーバー時の処理
@@ -84,7 +80,6 @@ namespace Tetris.Scripts.Application.Games
             _board.WhenPieceCrossOver.First().Subscribe(_ => {
                 gameOverFlg = true;
                 _finishCanvasView.Display();
-                Debug.Log("Game Over");
             }).AddTo(_disposable);
 
             var gameOverObservable = Observable.EveryUpdate().Where(_ => gameOverFlg);
@@ -125,11 +120,11 @@ namespace Tetris.Scripts.Application.Games
             Observable.EveryUpdate()
                 .Where(_ => Input.GetMouseButtonDown(1))
                 .Where(_ => _mino.Exists())
+                .Where(_ => _holdMino.IsAvailable)
                 .TakeUntil(gameOverObservable)
                 .Subscribe(_ => {
-                    if (_holdMino.Exists()) {
-                        MinoType minoType = _mino.MinoType;
-                        _mino.Delete();
+                    if (_holdMino.Exists) {
+                        MinoType minoType = _mino.MinoType; _mino.Delete();
                         _mino.Release();
                         CreateMino(_holdMino.GetMinoType());
                         _holdMino.Set(minoType);
@@ -216,6 +211,10 @@ namespace Tetris.Scripts.Application.Games
         public void CreateNextMino()
         {
             CreateMino(_minoReserveList.PopMinoType());
+            if (_holdMino.Exists) {
+                if (!_holdMino.IsFirst) _holdMino.SetAvailable();
+                _holdMino.SetNotFirst();
+            }
         }
 
         public void CreateMino(MinoType minoType)
@@ -230,7 +229,8 @@ namespace Tetris.Scripts.Application.Games
     {
         void Display();
         void UnDisplay();
-        GameObject GetGameObject();
+        void SetRestartButtonClick(UnityAction action);
+        void SetBackToTitleButton(UnityAction action);
     }
 
     public interface IFinishCanvasViewFactory
@@ -243,11 +243,18 @@ namespace Tetris.Scripts.Application.Games
         void CreateMinoBind(Mino mino);
     }
 
-    public interface INextMinoBindFactory {
+    public interface INextMinoBindFactory
+    {
         void CreateNextMinoBind(MinoReserveList minoReserveList);
     }
 
-    public interface IHoldMinoBindFactory {
+    public interface IHoldMinoBindFactory
+    {
         void CreateHoldMinoBind(HoldMino holdMino);
+    }
+
+    public interface IMinoShadowBindFactory
+    {
+        void CreateMinoShadowBind(MinoShadow minoShadow);
     }
 }

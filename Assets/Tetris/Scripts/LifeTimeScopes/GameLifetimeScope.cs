@@ -7,6 +7,8 @@ using Tetris.Scripts.Presenters.Minos;
 using Tetris.Scripts.Presenters.NextMinos;
 using Tetris.Scripts.Presenters.HoldMinos;
 using Tetris.Scripts.Presenters.ScriptableObjects;
+using Tetris.Scripts.Presenters.MinoPieces;
+using Tetris.Scripts.Presenters.MinoShadows;
 
 namespace Tetris.Scripts.LifetimeScopes
 {
@@ -25,6 +27,7 @@ namespace Tetris.Scripts.LifetimeScopes
             builder.Register<MinoBindFactory>(Lifetime.Singleton).As<IMinoBindFactory>();
             builder.Register<NextMinoBindFactory>(Lifetime.Singleton).As<INextMinoBindFactory>();
             builder.Register<HoldMinoBindFactory>(Lifetime.Singleton).As<IHoldMinoBindFactory>();
+            builder.Register<MinoShadowBindFactory>(Lifetime.Singleton).As<IMinoShadowBindFactory>();
             builder.Register<FinishCanvasViewFactory>(Lifetime.Singleton).As<IFinishCanvasViewFactory>();
 
             builder.RegisterEntryPoint<GameInitializer>();

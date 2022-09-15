@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UniRx;
-using Tetris.Scripts.Domains.Minos;
-using Tetris.Scripts.Domains.MinoTypes;
+using Tetris.Scripts.Domains.HoldMinos;
 using Tetris.Scripts.Domains.MinoShapes;
 using Tetris.Scripts.Domains.MinoColors;
+using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Presenters.HoldMinos
 {

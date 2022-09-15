@@ -2,6 +2,7 @@ using UnityEngine;
 using Tetris.Scripts.Application.Games;
 using Tetris.Scripts.Domains.Minos;
 using Tetris.Scripts.Presenters.ScriptableObjects;
+using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Presenters.Minos
 {

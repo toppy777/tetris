@@ -1,8 +1,9 @@
 using UnityEngine;
-using Tetris.Scripts.Domains.Minos;
 using System;
 using System.Collections.Generic;
 using UniRx;
+using Tetris.Scripts.Domains.Minos;
+using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Presenters.Minos
 {

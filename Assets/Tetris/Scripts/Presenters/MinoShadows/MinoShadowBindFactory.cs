@@ -1,25 +1,25 @@
 using UnityEngine;
+using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Application.Games;
 using Tetris.Scripts.Presenters.ScriptableObjects;
 using Tetris.Scripts.Presenters.MinoPieces;
-using Tetris.Scripts.Domains.MinoReserves;
 
-namespace Tetris.Scripts.Presenters.NextMinos
+namespace Tetris.Scripts.Presenters.MinoShadows
 {
-    public class NextMinoBindFactory : INextMinoBindFactory
+    public class MinoShadowBindFactory : IMinoShadowBindFactory
     {
         MinoPieceView _minoPieceViewPrefab;
 
-        public NextMinoBindFactory(
+        public MinoShadowBindFactory(
             Prefabs prefabs
         )
         {
             _minoPieceViewPrefab = prefabs.MinoPieceViewPrefab;
         }
 
-        public void CreateNextMinoBind(MinoReserveList minoReserveList)
+        public void CreateMinoShadowBind(MinoShadow minoShadow)
         {
-            new NextMinoBind(minoReserveList, _minoPieceViewPrefab);
+            new MinoShadowBind(minoShadow, _minoPieceViewPrefab);
         }
     }
 }

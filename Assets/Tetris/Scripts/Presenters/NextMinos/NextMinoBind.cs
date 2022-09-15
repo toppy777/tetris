@@ -6,6 +6,7 @@ using Tetris.Scripts.Domains.MinoReserves;
 using Tetris.Scripts.Domains.MinoTypes;
 using Tetris.Scripts.Domains.MinoShapes;
 using Tetris.Scripts.Domains.MinoColors;
+using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Presenters.NextMinos
 {

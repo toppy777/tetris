@@ -59,9 +59,16 @@ namespace Tetris.Scripts.Domains.Boards
         public void RemoveRow(int y)
         {
             for (int x = 0; x <= _xMax; x++) {
-                _piecesList[x,y].Delete();
-                _piecesList[x,y] = null;
+                RemoveAt(x,y);
+                // _piecesList[x,y].Delete();
+                // _piecesList[x,y] = null;
             }
+        }
+
+        public void RemoveAt(int x, int y)
+        {
+            _piecesList[x,y].Delete();
+            _piecesList[x,y] = null;
         }
 
         public void MoveDownRow(int y)
@@ -123,6 +130,17 @@ namespace Tetris.Scripts.Domains.Boards
                 }
             }
             return false;
+        }
+
+        public void Clear()
+        {
+            for (int y = 0; y < _yMax; y++) {
+                for (int x = 0; x < _xMax; x++) {
+                    if (!IsEmptyAt(x,y)) {
+                        RemoveAt(x,y);
+                    }
+                }
+            }
         }
     }
 }
