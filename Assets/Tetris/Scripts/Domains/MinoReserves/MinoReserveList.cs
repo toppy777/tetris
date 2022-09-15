@@ -9,9 +9,6 @@ namespace Tetris.Scripts.Domains.MinoReserves
     {
         List<MinoReserve> _list = new();
 
-        // Subject<List<(List<Vector2Int>shape, Color32 color)>> _whenPop;
-        // public IObservable<List<(List<Vector2Int>shape, Color32 color)>> WhenPop => _whenPop;
-
         Subject<Unit> _whenPop;
         public IObservable<Unit> WhenPop => _whenPop;
 
@@ -19,7 +16,6 @@ namespace Tetris.Scripts.Domains.MinoReserves
         {
             _list.Add(new MinoReserve());
             _list.Add(new MinoReserve());
-            // _whenPop = new Subject<List<(List<Vector2Int>shape, Color32 color)>>();
             _whenPop = new Subject<Unit>();
         }
 
@@ -35,14 +31,6 @@ namespace Tetris.Scripts.Domains.MinoReserves
                 _list.RemoveAt(0);
                 AddMinoReserve();
             }
-
-            // 次の7つのミノの形と色を通知
-            // List<(List<Vector2Int> ,Color32)> message = new List<(List<Vector2Int>, Color32)>();
-            // List<MinoType> typeList = new List<MinoType>();
-            // for (int i = 0; i < 7; i++) {
-            //     message.Add((MinoShapeType.GetShape(GetMinoTypeAt(i))[0], MinoColor.GetColor(GetMinoTypeAt(i))));
-            // }
-            // _whenPop.OnNext(message);
             _whenPop.OnNext(Unit.Default);
 
             return mino;
