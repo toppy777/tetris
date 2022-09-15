@@ -1,5 +1,5 @@
 using UnityEngine;
-using Tetris.Scripts.Application.Games;
+using Tetris.Scripts.Domains.Others;
 using Tetris.Scripts.Presenters.ScriptableObjects;
 
 namespace Tetris.Scripts.Presenters.FinishCanvas

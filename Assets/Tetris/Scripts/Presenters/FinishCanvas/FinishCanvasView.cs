@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Tetris.Scripts.Application.Games;
+using Tetris.Scripts.Domains.Others;
 
 namespace Tetris.Scripts.Presenters.FinishCanvas
 {

@@ -1,8 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
 using Tetris.Scripts.Domains.MinoTypes;
-using Tetris.Scripts.Domains.MinoShapes;
-using Tetris.Scripts.Domains.MinoColors;
 using UniRx;
 using System;
 

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections.Generic;
 using System;
 using UniRx;
 using Tetris.Scripts.Domains.Minos;
@@ -9,14 +8,13 @@ using Tetris.Scripts.Domains.Boards;
 using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Domains.MinoReserves;
 using Tetris.Scripts.Domains.MinoTypes;
+using Tetris.Scripts.Domains.Others;
 using UnityEngine.SceneManagement;
-using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Application.Games
 {
     public class CreateGameUseCase
     {
-        MinoPieceView _minoPieceViewPrefab;
         Mino _mino;
         Board _board;
         MinoFactory _minoFactory;
@@ -34,7 +32,6 @@ namespace Tetris.Scripts.Application.Games
         private readonly CompositeDisposable _disposable = new();
 
         public CreateGameUseCase(
-            MinoPieceView prefab,
             IMinoBindFactory minoBindFactory,
             IFinishCanvasViewFactory finishCanvasViewFactory,
             INextMinoBindFactory nextMinoBindFactory,
@@ -42,7 +39,6 @@ namespace Tetris.Scripts.Application.Games
             IMinoShadowBindFactory minoShadowBindFactory
         )
         {
-            _minoPieceViewPrefab = prefab;
             _minoBindFactory = minoBindFactory;
             _nextMinoBindFactory = nextMinoBindFactory;
             _holdMinoBindFactory = holdMinoBindFactory;
@@ -223,38 +219,5 @@ namespace Tetris.Scripts.Application.Games
             _minoBindFactory.CreateMinoBind(_mino);
             _nextMinoBindFactory.CreateNextMinoBind(_minoReserveList);
         }
-    }
-
-    public interface IFinishCanvasView
-    {
-        void Display();
-        void UnDisplay();
-        void SetRestartButtonClick(UnityAction action);
-        void SetBackToTitleButton(UnityAction action);
-    }
-
-    public interface IFinishCanvasViewFactory
-    {
-        IFinishCanvasView CreateFinishCanvasView();
-    }
-
-    public interface IMinoBindFactory
-    {
-        void CreateMinoBind(Mino mino);
-    }
-
-    public interface INextMinoBindFactory
-    {
-        void CreateNextMinoBind(MinoReserveList minoReserveList);
-    }
-
-    public interface IHoldMinoBindFactory
-    {
-        void CreateHoldMinoBind(HoldMino holdMino);
-    }
-
-    public interface IMinoShadowBindFactory
-    {
-        void CreateMinoShadowBind(MinoShadow minoShadow);
     }
 }
