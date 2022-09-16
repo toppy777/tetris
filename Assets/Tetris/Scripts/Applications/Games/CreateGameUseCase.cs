@@ -1,6 +1,6 @@
-using UnityEngine;
-using UnityEngine.Events;
 using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UniRx;
 using Tetris.Scripts.Domains.Minos;
 using Tetris.Scripts.Domains.HoldMinos;
@@ -9,7 +9,6 @@ using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Domains.MinoReserves;
 using Tetris.Scripts.Domains.MinoTypes;
 using Tetris.Scripts.Domains.Others;
-using UnityEngine.SceneManagement;
 
 namespace Tetris.Scripts.Application.Games
 {
@@ -103,13 +102,9 @@ namespace Tetris.Scripts.Application.Games
                 .Where(_ => _mino.Exists())
                 .TakeUntil(gameOverObservable)
                 .Subscribe(_ => {
-                    // _moveNow = false;
                     _mino.MoveTo(_minoShadowService.GetMinoShadowPositions(_board, _mino));
                     _board.Add(_mino);
-                    // _mino = null;
                     _mino.Release();
-                    // NextMinoSetから最初のNextMinoを削除
-                    // _nextMinoSet.DeleteHead();
                 }).AddTo(_disposable);
 
             // 右クリックしたときの処理
@@ -169,10 +164,8 @@ namespace Tetris.Scripts.Application.Games
                     // ■ 動けるか調べる
                     // Can Move Down?
                     if (!_boardService.CanMove(0, -1, _board, _mino)) {
-                        // _moveNow = false;
                         // ■ 盤面に固定
                         _board.Add(_mino);
-                        // _mino = null;
                         _mino.Release();
                         return;
                     }
@@ -180,16 +173,6 @@ namespace Tetris.Scripts.Application.Games
                     // ■ 動く
                     _mino.MoveTo(_mino.Position.X, _mino.Position.Y-1);
                 }).AddTo(_disposable);
-        }
-
-        private const float xBegin = 0.24f;
-        private const float yBegin = 0.24f;
-        public Vector2 GetPosition(Vector2Int indexPos)
-        {
-            float x = indexPos.x * 0.16f;
-            float y = indexPos.y * 0.16f;
-
-            return new Vector2(x + xBegin, y + yBegin);
         }
 
         public int GetPositionX(float posX)
