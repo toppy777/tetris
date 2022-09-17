@@ -8,18 +8,9 @@ namespace Tetris.Scripts.Domains.MinoShadows
 {
     public class MinoShadow
     {
-        List<Position> _piecePositions;
-        Subject<List<Vector2Int>> _whenPositionsChange;
+        List<Position> _piecePositions = new();
+        Subject<List<Vector2Int>> _whenPositionsChange = new();
         public IObservable<List<Vector2Int>> WhenPositionsChange => _whenPositionsChange;
-        ReactiveProperty<bool> _displayFlg;
-        public IObservable<bool> WhenDisplayFlgChange => _displayFlg;
-
-        public MinoShadow()
-        {
-            _piecePositions = new List<Position>();
-            _whenPositionsChange = new Subject<List<Vector2Int>>();
-            _displayFlg = new ReactiveProperty<bool>();
-        }
 
         public void Set(List<Vector2Int> piecePositions)
         {
@@ -37,16 +28,6 @@ namespace Tetris.Scripts.Domains.MinoShadows
                 list.Add(new Vector2Int(pos.X, pos.Y));
             }
             return list;
-        }
-
-        public void Display()
-        {
-            _displayFlg.Value = true;
-        }
-
-        public void UnDisplay()
-        {
-            _displayFlg.Value = false;
         }
     }
 }
