@@ -8,6 +8,10 @@ using Tetris.Scripts.Domains.Boards;
 using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Domains.MinoReserves;
 using Tetris.Scripts.Domains.MinoTypes;
+using Tetris.Scripts.Domains.RowCounts;
+using Tetris.Scripts.Domains.Levels;
+using Tetris.Scripts.Domains.Points;
+using Tetris.Scripts.Domains.MoveDownTimes;
 using Tetris.Scripts.Domains.Others;
 
 namespace Tetris.Scripts.Application.Games
@@ -22,6 +26,10 @@ namespace Tetris.Scripts.Application.Games
         MinoShadowService _minoShadowService;
         MinoReserveList _minoReserveList;
         HoldMino _holdMino;
+        RowCount _rowCount;
+        Level _level;
+        Point _point;
+        MoveDownTime _moveDownTime;
 
         IMinoBindFactory _minoBindFactory;
         INextMinoBindFactory _nextMinoBindFactory;
@@ -50,6 +58,10 @@ namespace Tetris.Scripts.Application.Games
             _minoShadowService = new MinoShadowService(_boardService);
             _minoReserveList = new MinoReserveList();
             _holdMino = new HoldMino();
+            _rowCount = new RowCount();
+            _level = new Level();
+            _point = new Point();
+            _moveDownTime = new MoveDownTime();
 
             _finishCanvasView = finishCanvasViewFactory.CreateFinishCanvasView();
             _finishCanvasView.SetRestartButtonClick(() => {
@@ -61,6 +73,14 @@ namespace Tetris.Scripts.Application.Games
             });
             _finishCanvasView.SetBackToTitleButton(() => SceneManager.LoadScene("TitleScene"));
             _finishCanvasView.UnDisplay();
+
+            _board.WhenRowRemove.Subscribe(_ => {
+                _rowCount.Add(1);
+                _point.Add(_level, 1);
+                _level.Calc(_point);
+                Debug.Log($"ポイント: {_point.Value}");
+                Debug.Log($"レベル: {_level.Value}");
+            }).AddTo(_disposable);
 
             minoShadowBindFactory.CreateMinoShadowBind(_minoShadow);
         }
@@ -158,7 +178,7 @@ namespace Tetris.Scripts.Application.Games
                 }).AddTo(_disposable);
             
             // 0.5秒毎に実行する処理
-            Observable.Interval(TimeSpan.FromSeconds(0.5f))
+            Observable.Interval(TimeSpan.FromSeconds(MoveDownTime.GetSeconds(_level.Value)))
                 .TakeUntil(gameOverObservable)
                 .Subscribe(_ => {
                     // ■ 動けるか調べる

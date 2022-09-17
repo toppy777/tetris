@@ -14,6 +14,9 @@ namespace Tetris.Scripts.Domains.Boards
         Subject<Unit> _whenPieceCrossOver = new();
         public IObservable<Unit> WhenPieceCrossOver => _whenPieceCrossOver;
 
+        Subject<Unit> _whenRowRemove = new();
+        public IObservable<Unit> WhenRowRemove => _whenRowRemove;
+
         public Board()
         {
             _xMax = 10-1;
@@ -36,6 +39,7 @@ namespace Tetris.Scripts.Domains.Boards
                 // 横一行そろったか
                 if (CheckCompleteRow(y)) {
                     RemoveRow(y);
+                    _whenRowRemove.OnNext(Unit.Default);
                     // そろった行の一段上からすべてのオブジェクトを一段下げる
                     for (int yy = y + 1; yy <= _yMax - 4; yy++) {
                         MoveDownRow(yy);
