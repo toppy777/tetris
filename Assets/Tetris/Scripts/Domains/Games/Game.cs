@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UniRx;
@@ -25,6 +26,7 @@ namespace Tetris.Scripts.Domains.Games
             Level = new Level();
             Point = new Point();
             HorizontalPosition = new HorizontalPosition();
+            Disposables = new List<IDisposable>();
         }
 
         public Mino Mino { get; set; }
@@ -35,5 +37,6 @@ namespace Tetris.Scripts.Domains.Games
         public Level Level { get; }
         public Point Point { get; }
         public HorizontalPosition HorizontalPosition { get; }
+        public List<IDisposable> Disposables { get; }
     }
 }

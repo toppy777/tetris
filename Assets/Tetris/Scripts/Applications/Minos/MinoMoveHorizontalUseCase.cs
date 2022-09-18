@@ -29,7 +29,6 @@ namespace Tetris.Scripts.Application.Minos
             game.HorizontalPosition.Set(HorizontalPosition.GetHorizontalPos());
             if (_boardService.HasSpaceForMino(game.Board, game.Mino, new Vector2Int(game.HorizontalPosition.Value, game.Mino.Position.Y))) {
                 game.Mino.MoveTo(game.HorizontalPosition.Value, game.Mino.Position.Y);
-                Debug.Log(game.Mino);
                 game.MinoShadow.Set(_minoShadowService.GetMinoShadowPositions(game.Board, game.Mino));
             }
         }
