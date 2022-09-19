@@ -2,6 +2,7 @@ using UnityEngine;
 using UniRx;
 using System;
 using Tetris.Scripts.Domains.Games;
+using Tetris.Scripts.Application.Minos;
 using Tetris.Scripts.Application.HoldMinos;
 
 namespace Tetris.Scripts.Presenters.Inputs
@@ -10,8 +11,12 @@ namespace Tetris.Scripts.Presenters.Inputs
     {
         public IDisposable Disposable;
 
-        public RightMouseClickPresenter(Game game, SwapHoldMinoUseCase swapHoldMinoUseCase, SetHoldMinoUseCase setHoldMinoUseCase)
-        {
+        public RightMouseClickPresenter(
+            Game game,
+            SwapHoldMinoUseCase swapHoldMinoUseCase,
+            SetHoldMinoUseCase setHoldMinoUseCase,
+            CreateNextMinoUseCase createNextMinoUseCase
+        ) {
             Disposable = Observable.EveryUpdate()
                 .Where(_ => Input.GetMouseButtonDown(1))
                 .Where(_ => game.Mino.Exists())
@@ -24,6 +29,7 @@ namespace Tetris.Scripts.Presenters.Inputs
                     } else {
                         // ■ HoldMinoに登録(初回)
                         setHoldMinoUseCase.Execute();
+                        createNextMinoUseCase.Execute();
                     }
                 });
         }

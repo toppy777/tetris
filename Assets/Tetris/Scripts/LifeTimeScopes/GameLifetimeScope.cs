@@ -13,6 +13,8 @@ using Tetris.Scripts.Domains.Minos;
 using Tetris.Scripts.Domains.Boards;
 using Tetris.Scripts.Domains.MinoReserves;
 using Tetris.Scripts.Domains.Others;
+using Tetris.Scripts.Domains.Levels;
+using Tetris.Scripts.Domains.Points;
 
 using Tetris.Scripts.Presenters.FinishCanvas;
 using Tetris.Scripts.Presenters.Minos;
@@ -21,6 +23,8 @@ using Tetris.Scripts.Presenters.HoldMinos;
 using Tetris.Scripts.Presenters.ScriptableObjects;
 using Tetris.Scripts.Presenters.MinoPieces;
 using Tetris.Scripts.Presenters.MinoShadows;
+using Tetris.Scripts.Presenters.Levels;
+using Tetris.Scripts.Presenters.Scores;
 
 using Tetris.Scripts.Domains.Inputs;
 using Tetris.Scripts.Presenters.Inputs;
@@ -37,6 +41,10 @@ namespace Tetris.Scripts.LifetimeScopes
             // Prefabs
             builder.RegisterInstance(_prefabs);
             builder.RegisterInstance(_minoPieceViewPrefab);
+
+            // Views
+            builder.RegisterComponentInHierarchy<LevelView>().AsSelf();
+            builder.RegisterComponentInHierarchy<ScoreView>().AsSelf();
 
             // View Binds
             builder.Register<MinoBindFactory>(Lifetime.Singleton).As<IMinoBindFactory>();
@@ -73,6 +81,10 @@ namespace Tetris.Scripts.LifetimeScopes
             builder.Register<ScrollDownPresenterFactory>(Lifetime.Singleton).As<IScrollDownPresenterFactory>();
             builder.Register<MouseMovePresenterFactory>(Lifetime.Singleton).As<IMouseMovePresenterFactory>();
             builder.Register<IntervalPresenterFactory>(Lifetime.Singleton).As<IIntervalPresenterFactory>();
+
+            // ViewPresenters
+            builder.Register<LevelPresenterFactory>(Lifetime.Singleton).As<ILevelPresenterFactory>();
+            builder.Register<ScoreViewPresenterFactory>(Lifetime.Singleton).As<IScoreViewPresenterFactory>();
 
             // Entry Point
             builder.RegisterEntryPoint<GameInitializer>();

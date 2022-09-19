@@ -1,3 +1,5 @@
+using UniRx;
+using System;
 using Tetris.Scripts.Domains.Points;
 
 namespace Tetris.Scripts.Domains.Levels
@@ -7,12 +9,16 @@ namespace Tetris.Scripts.Domains.Levels
         int _value;
         public int Value => _value;
 
+        Subject<int> _whenLevelSet;
+        public IObservable<int> WhenLevelSet => _whenLevelSet;
+
         public Level()
         {
             _value = 1;
+            _whenLevelSet = new Subject<int>();
         }
 
-        public void Calc(Point point)
+        public void Set(Point point)
         {
             if (point.Value > 20) {
                 Up();
@@ -27,6 +33,7 @@ namespace Tetris.Scripts.Domains.Levels
             } else {
                 // 何もしない
             }
+            _whenLevelSet.OnNext(_value);
         }
 
         public void Up()

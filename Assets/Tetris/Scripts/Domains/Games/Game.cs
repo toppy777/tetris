@@ -11,6 +11,8 @@ using Tetris.Scripts.Domains.MinoReserves;
 using Tetris.Scripts.Domains.Levels;
 using Tetris.Scripts.Domains.Points;
 using Tetris.Scripts.Domains.HorizontalPositions;
+using Tetris.Scripts.Domains.GameStatuses;
+using Tetris.Scripts.Domains.MinoMoveSpeeds;
 
 namespace Tetris.Scripts.Domains.Games
 {
@@ -27,6 +29,8 @@ namespace Tetris.Scripts.Domains.Games
             Point = new Point();
             HorizontalPosition = new HorizontalPosition();
             Disposables = new List<IDisposable>();
+            GameStatus = new GameStatus();
+            MinoMoveSpeed = new MinoMoveSpeed();
         }
 
         public Mino Mino { get; set; }
@@ -38,5 +42,16 @@ namespace Tetris.Scripts.Domains.Games
         public Point Point { get; }
         public HorizontalPosition HorizontalPosition { get; }
         public List<IDisposable> Disposables { get; }
+        public GameStatus GameStatus { get; }
+        public MinoMoveSpeed MinoMoveSpeed { get; }
+
+        public void Dispose()
+        {
+            foreach (IDisposable disposable in Disposables) {
+                Debug.Log("Dispose!");
+                disposable?.Dispose();
+            }
+            Disposables.Clear();
+        }
     }
 }

@@ -5,6 +5,8 @@ using Tetris.Scripts.Domains.Games;
 using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Domains.Others;
 using Tetris.Scripts.Domains.Inputs;
+using Tetris.Scripts.Domains.Levels;
+using Tetris.Scripts.Domains.Points;
 using Tetris.Scripts.Application.Minos;
 
 namespace Tetris.Scripts.Application.Games
@@ -13,6 +15,7 @@ namespace Tetris.Scripts.Application.Games
     {
         Game _game;
         IFinishCanvasView _finishCanvasView;
+        IMinoShadowBindFactory _minoShadowBindFactory;
         CreateNextMinoUseCase _createNextMinoUseCase;
         ILeftMouseClickPresenterFactory _leftMouseClickPresenterFactory;
         IRightMouseClickPresenterFactory _rightMouseClickPresenterFactory;
@@ -20,9 +23,9 @@ namespace Tetris.Scripts.Application.Games
         IScrollUpPresenterFactory _scrollUpPresenterFactory;
         IScrollDownPresenterFactory _scrollDownPresenterFactory;
         IIntervalPresenterFactory _intervalPresenterFactory;
+        ILevelPresenterFactory _levelPresenterFactory;
+        IScoreViewPresenterFactory _scoreViewPresenterFactory;
         GameRegistry _gameRegistry;
-
-        private readonly CompositeDisposable _disposable = new();
 
         public CreateGameUseCase(
             IFinishCanvasViewFactory finishCanvasViewFactory,
@@ -34,7 +37,9 @@ namespace Tetris.Scripts.Application.Games
             IMouseMovePresenterFactory mouseMovePresenterFactory,
             IScrollUpPresenterFactory scrollUpPresenterFactory,
             IScrollDownPresenterFactory scrollDownPresenterFactory,
-            IIntervalPresenterFactory intervalPresenterFactory
+            IIntervalPresenterFactory intervalPresenterFactory,
+            ILevelPresenterFactory levelPresenterFactory,
+            IScoreViewPresenterFactory scoreViewPresenterFactory
         )
         {
             _createNextMinoUseCase = createNextMinoUseCase;
@@ -44,12 +49,25 @@ namespace Tetris.Scripts.Application.Games
             _scrollUpPresenterFactory = scrollUpPresenterFactory;
             _scrollDownPresenterFactory = scrollDownPresenterFactory;
             _intervalPresenterFactory = intervalPresenterFactory;
-
-            _game = new Game();
             _gameRegistry = gameRegistry;
-            _gameRegistry.Register(_game);
-
+            _minoShadowBindFactory = minoShadowBindFactory;
             _finishCanvasView = finishCanvasViewFactory.CreateFinishCanvasView();
+            _levelPresenterFactory = levelPresenterFactory;
+            _scoreViewPresenterFactory = scoreViewPresenterFactory;
+            _game = new Game();
+            _gameRegistry.Register(_game);
+        }
+
+        public void Execute()
+        {
+            _game.Disposables.Add(
+                _levelPresenterFactory.Create(_game)
+            );
+
+            _game.Disposables.Add(
+                _scoreViewPresenterFactory.Create(_game)
+            );
+
             _finishCanvasView.SetRestartButtonClick(() => {
                 // ボードクリア
                 _game.Board.Clear();
@@ -57,30 +75,34 @@ namespace Tetris.Scripts.Application.Games
                 _finishCanvasView.UnDisplay();
                 Execute();
             });
-            _finishCanvasView.SetBackToTitleButton(() => SceneManager.LoadScene("TitleScene"));
+
+            _finishCanvasView.SetBackToTitleButton(() => {
+                SceneManager.LoadScene("TitleScene");
+            });
+
             _finishCanvasView.UnDisplay();
 
-            _game.Board.WhenRowRemove.Subscribe(_ => {
-                _game.Point.Add(_game.Level, 1);
-                _game.Level.Calc(_game.Point);
-                Debug.Log($"ポイント: {_game.Point.Value}");
-                Debug.Log($"レベル: {_game.Level.Value}");
-            }).AddTo(_disposable);
+            _game.Disposables.Add(
+                _game.Board.WhenRowRemove.Subscribe(_ => {
+                    _game.Point.Add(_game.Level, 1);
+                    _game.Level.Set(_game.Point);
+                    _game.MinoMoveSpeed.SetSpeed(_game.Level);
+                    Debug.Log($"ポイント: {_game.Point.Value}");
+                    Debug.Log($"レベル: {_game.Level.Value}");
+                })
+            );
 
-            minoShadowBindFactory.CreateMinoShadowBind(_game.MinoShadow);
-        }
+            _game.Disposables.Add(
+                _game.Board.WhenPieceCrossOver.First().Subscribe(_ => {
+                    _game.GameStatus.GameOver();
+                    _finishCanvasView.Display();
+                    _game.Dispose();
+                })
+            );
 
-        public void Execute()
-        {
+            _minoShadowBindFactory.CreateMinoShadowBind(_game.MinoShadow);
 
-            // ゲームオーバー時の処理
-            bool gameOverFlg = false;
-            _game.Board.WhenPieceCrossOver.First().Subscribe(_ => {
-                gameOverFlg = true;
-                _finishCanvasView.Display();
-            }).AddTo(_disposable);
-
-            var gameOverObservable = Observable.EveryUpdate().Where(_ => gameOverFlg);
+            _game.GameStatus.Play();
 
             _createNextMinoUseCase.Execute();
 
@@ -95,7 +117,7 @@ namespace Tetris.Scripts.Application.Games
             // スクロールした時の処理
             _game.Disposables.Add(_scrollUpPresenterFactory.Create(_game));
             _game.Disposables.Add(_scrollDownPresenterFactory.Create(_game));
-            
+
             // 0.5秒毎に実行する処理
             _game.Disposables.Add(_intervalPresenterFactory.Create(_game));
         }
