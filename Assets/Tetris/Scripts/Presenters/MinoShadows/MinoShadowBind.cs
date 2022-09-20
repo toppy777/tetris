@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using UniRx;
-using System;
 using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Presenters.MinoPieces;
 
