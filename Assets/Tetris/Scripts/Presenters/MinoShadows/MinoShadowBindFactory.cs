@@ -15,9 +15,9 @@ namespace Tetris.Scripts.Presenters.MinoShadows
             _minoPieceViewPrefab = prefabs.MinoPieceViewPrefab;
         }
 
-        public void CreateMinoShadowBind(MinoShadow minoShadow)
+        public IMinoShadowBind CreateMinoShadowBind(MinoShadow minoShadow)
         {
-            new MinoShadowBind(minoShadow, _minoPieceViewPrefab);
+            return new MinoShadowBind(minoShadow, _minoPieceViewPrefab);
         }
     }
 }

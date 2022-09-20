@@ -7,7 +7,7 @@ using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Presenters.Minos
 {
-    public class MinoBind : IDisposable
+    public class MinoBind : IMinoBind, IDisposable
     {
         private readonly CompositeDisposable _disposable = new();
 
@@ -21,6 +21,7 @@ namespace Tetris.Scripts.Presenters.Minos
             List<MinoPieceView> minoViews = new List<MinoPieceView>();
             for (int i = 0; i < pieceNum; i++) {
                 var copy = GameObject.Instantiate(minoPieceViewPrefab);
+                copy.AddTo(_disposable);
                 copy.GetComponent<Renderer>().material.color = mino.Color;
                 minoViews.Add(copy);
             }
@@ -53,7 +54,7 @@ namespace Tetris.Scripts.Presenters.Minos
             return new Vector2(x + xBegin, y + yBegin);
         }
 
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             _disposable.Dispose();
         }

@@ -29,8 +29,9 @@ namespace Tetris.Scripts.Application.Minos
         {
             Game game = _gameRegistry.CurrentGame;
             game.Mino = _minoFactory.CreateMino(minoType);
-            _minoBindFactory.CreateMinoBind(game.Mino);
-            _nextMinoBindFactory.CreateNextMinoBind(game.MinoReserveList);
+            game.MinoBind = _minoBindFactory.CreateMinoBind(game.Mino);
+            game.NextMinoBind?.Dispose();
+            game.NextMinoBind = _nextMinoBindFactory.CreateNextMinoBind(game.MinoReserveList);
         }
     }
 }

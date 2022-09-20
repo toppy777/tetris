@@ -34,9 +34,12 @@ namespace Tetris.Scripts.Domains.Games
         }
 
         public Mino Mino { get; set; }
+        public IMinoBind MinoBind { get; set; }
         public Board Board { get; }
         public MinoReserveList MinoReserveList { get; }
+        public INextMinoBind NextMinoBind { get; set; }
         public MinoShadow MinoShadow { get; }
+        public IMinoShadowBind MinoShadowBind { get; set; }
         public HoldMino HoldMino { get; }
         public Level Level { get; }
         public Point Point { get; }
@@ -48,7 +51,6 @@ namespace Tetris.Scripts.Domains.Games
         public void Dispose()
         {
             foreach (IDisposable disposable in Disposables) {
-                Debug.Log("Dispose!");
                 disposable?.Dispose();
             }
             Disposables.Clear();

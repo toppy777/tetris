@@ -10,7 +10,7 @@ using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Presenters.NextMinos
 {
-    public class NextMinoBind : IDisposable
+    public class NextMinoBind : INextMinoBind, IDisposable
     {
         private readonly CompositeDisposable _disposable = new();
 
@@ -33,6 +33,7 @@ namespace Tetris.Scripts.Presenters.NextMinos
 
                 for (int i = 0; i < 4; i++) {
                     MinoPieceView pieceView = GameObject.Instantiate(minoPieceView);
+                    pieceView.AddTo(_disposable);
                     pieceView.SetColor(minoColor.Value);
                     pieceView.SetPosition(new Vector2(posList[index].x + minoShapePatten.GetShape()[i].x * 0.16f, posList[index].y + minoShapePatten.GetShape()[i].y * 0.16f));
                     pieceViews.Add(pieceView);
@@ -40,13 +41,13 @@ namespace Tetris.Scripts.Presenters.NextMinos
                 index++;
             }
 
-            foreach (MinoPieceView view in pieceViews) {
-                minoReserveList.WhenPop.Subscribe(_ => {
-                    if (view != null) {
-                        view.Delete();
-                    }
-                }).AddTo(_disposable);
-            }
+            // foreach (MinoPieceView view in pieceViews) {
+            //     minoReserveList.WhenPop.Subscribe(_ => {
+            //         if (view != null) {
+            //             view.Delete();
+            //         }
+            //     }).AddTo(_disposable);
+            // }
         }
 
         public void Dispose()

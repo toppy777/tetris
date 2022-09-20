@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 using UniRx;
 using System;
 using Tetris.Scripts.Domains.MinoShadows;
@@ -7,7 +8,7 @@ using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Presenters.MinoShadows
 {
-    public class MinoShadowBind : IDisposable
+    public class MinoShadowBind : IMinoShadowBind, IDisposable
     {
         private readonly CompositeDisposable _disposable = new();
 
@@ -22,6 +23,7 @@ namespace Tetris.Scripts.Presenters.MinoShadows
             List<MinoPieceView> shadowPieceViews = new List<MinoPieceView>();
             for (int i = 0; i < pieceNum; i++) {
                 var copy = GameObject.Instantiate(minoPieceViewPrefab);
+                copy.AddTo(_disposable);
                 copy.GetComponent<Renderer>().material.color = color;
                 shadowPieceViews.Add(copy);
             }

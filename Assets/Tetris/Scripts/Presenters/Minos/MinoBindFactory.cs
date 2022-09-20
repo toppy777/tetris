@@ -14,9 +14,9 @@ namespace Tetris.Scripts.Presenters.Minos
             _minoPieceViewPrefab = prefabs.MinoPieceViewPrefab;
         }
 
-        public void CreateMinoBind(Mino mino)
+        public IMinoBind CreateMinoBind(Mino mino)
         {
-            new MinoBind(mino, _minoPieceViewPrefab);
+            return new MinoBind(mino, _minoPieceViewPrefab);
         }
     }
 }

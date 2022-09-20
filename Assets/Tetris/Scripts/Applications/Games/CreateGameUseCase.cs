@@ -54,12 +54,13 @@ namespace Tetris.Scripts.Application.Games
             _finishCanvasView = finishCanvasViewFactory.CreateFinishCanvasView();
             _levelPresenterFactory = levelPresenterFactory;
             _scoreViewPresenterFactory = scoreViewPresenterFactory;
-            _game = new Game();
-            _gameRegistry.Register(_game);
         }
 
         public void Execute()
         {
+            _game = new Game();
+            _gameRegistry.Register(_game);
+
             _game.Disposables.Add(
                 _levelPresenterFactory.Create(_game)
             );
@@ -72,6 +73,9 @@ namespace Tetris.Scripts.Application.Games
                 // ボードクリア
                 _game.Board.Clear();
                 _game.Mino.Release();
+                _game.MinoShadowBind?.Dispose();
+                _game.MinoBind?.Dispose();
+                _game.NextMinoBind?.Dispose();
                 _finishCanvasView.UnDisplay();
                 Execute();
             });
@@ -92,15 +96,13 @@ namespace Tetris.Scripts.Application.Games
                 })
             );
 
-            _game.Disposables.Add(
-                _game.Board.WhenPieceCrossOver.First().Subscribe(_ => {
-                    _game.GameStatus.GameOver();
-                    _finishCanvasView.Display();
-                    _game.Dispose();
-                })
-            );
+            _game.Board.WhenPieceCrossOver.First().Subscribe(_ => {
+                _game.GameStatus.GameOver();
+                _finishCanvasView.Display();
+                _game.Dispose();
+            });
 
-            _minoShadowBindFactory.CreateMinoShadowBind(_game.MinoShadow);
+            _game.MinoShadowBind = _minoShadowBindFactory.CreateMinoShadowBind(_game.MinoShadow);
 
             _game.GameStatus.Play();
 

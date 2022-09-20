@@ -14,9 +14,9 @@ namespace Tetris.Scripts.Presenters.Inputs
         public LeftMouseClickPresenter(Game game, FastPlaceMinoUseCase fastPlaceMinoUseCase, CreateNextMinoUseCase createNextMinoUseCase)
         {
             Disposable = Observable.EveryUpdate()
+                .Where(_ => game.GameStatus.Value == GameStatusType.Play)
                 .Where(_ => Input.GetMouseButtonDown(0))
                 .Where(_ => game.Mino.Exists())
-                .Where(_ => game.GameStatus.Value != GameStatusType.GameOver)
                 .Subscribe(_ => {
                     fastPlaceMinoUseCase.Execute();
                     createNextMinoUseCase.Execute();

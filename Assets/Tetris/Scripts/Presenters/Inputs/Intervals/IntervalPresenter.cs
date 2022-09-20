@@ -3,6 +3,7 @@ using UniRx;
 using UnityEngine;
 using Tetris.Scripts.Domains.Games;
 using Tetris.Scripts.Domains.Boards;
+using Tetris.Scripts.Domains.GameStatuses;
 using Tetris.Scripts.Application.Minos;
 
 namespace Tetris.Scripts.Presenters.Inputs
@@ -20,10 +21,14 @@ namespace Tetris.Scripts.Presenters.Inputs
         )
         {
             Disposable = Observable.EveryUpdate()
-                // .TakeUntil(gameOverObservable)
+                .Where(_ => game.GameStatus.Value == GameStatusType.Play)
                 .Subscribe(_ => {
                     game.MinoMoveSpeed.AddElapsedTime(Time.deltaTime);
                     if (!game.MinoMoveSpeed.IsElapsed()) {
+                        return;
+                    }
+
+                    if (!game.Mino.Exists()) {
                         return;
                     }
 
