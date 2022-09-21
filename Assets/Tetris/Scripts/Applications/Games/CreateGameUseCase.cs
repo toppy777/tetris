@@ -8,6 +8,7 @@ using Tetris.Scripts.Domains.Inputs;
 using Tetris.Scripts.Domains.Levels;
 using Tetris.Scripts.Domains.Points;
 using Tetris.Scripts.Application.Minos;
+using Tetris.Scripts.Infrastructures.BetweenScenes;
 
 namespace Tetris.Scripts.Application.Games
 {
@@ -26,6 +27,7 @@ namespace Tetris.Scripts.Application.Games
         ILevelPresenterFactory _levelPresenterFactory;
         IScoreViewPresenterFactory _scoreViewPresenterFactory;
         GameRegistry _gameRegistry;
+        ModeRepository _modeRepository;
 
         public CreateGameUseCase(
             IFinishCanvasViewFactory finishCanvasViewFactory,
@@ -54,10 +56,13 @@ namespace Tetris.Scripts.Application.Games
             _finishCanvasView = finishCanvasViewFactory.CreateFinishCanvasView();
             _levelPresenterFactory = levelPresenterFactory;
             _scoreViewPresenterFactory = scoreViewPresenterFactory;
+            _modeRepository = new ModeRepository();
         }
 
         public void Execute()
         {
+            Debug.Log(_modeRepository.GetMode());
+
             _game = new Game();
             _gameRegistry.Register(_game);
 

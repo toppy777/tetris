@@ -29,6 +29,8 @@ using Tetris.Scripts.Presenters.Scores;
 using Tetris.Scripts.Domains.Inputs;
 using Tetris.Scripts.Presenters.Inputs;
 
+using Tetris.Scripts.Infrastructures.BetweenScenes;
+
 namespace Tetris.Scripts.LifetimeScopes
 {
     public class GameLifetimeScope : LifetimeScope
@@ -41,6 +43,9 @@ namespace Tetris.Scripts.LifetimeScopes
             // Prefabs
             builder.RegisterInstance(_prefabs);
             builder.RegisterInstance(_minoPieceViewPrefab);
+
+            // Infrastructures
+            builder.Register<ModeRepository>(Lifetime.Singleton);
 
             // Views
             builder.RegisterComponentInHierarchy<LevelView>().AsSelf();
