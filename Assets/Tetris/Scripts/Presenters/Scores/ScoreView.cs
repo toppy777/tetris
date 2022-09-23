@@ -1,13 +1,23 @@
 using UnityEngine;
-using TMPro;
+using Tetris.Scripts.Domains.Scores;
 
 namespace Tetris.Scripts.Presenters.Scores
 {
-    public class ScoreView : MonoBehaviour
+    public class ScoreView : MonoBehaviour, IScoreView
     {
-        public void SetText(int level)
+        public void Display()
         {
-            GetComponent<TextMeshProUGUI>().text = level.ToString();
+            gameObject.SetActive(true);
+        }
+
+        public void UnDisplay()
+        {
+            gameObject.SetActive(false);
+        }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
         }
     }
 }

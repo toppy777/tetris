@@ -1,6 +1,6 @@
 using UniRx;
 using System;
-using Tetris.Scripts.Domains.Points;
+using Tetris.Scripts.Domains.Scores;
 
 namespace Tetris.Scripts.Domains.Levels
 {
@@ -18,7 +18,7 @@ namespace Tetris.Scripts.Domains.Levels
             _whenLevelSet = new Subject<int>();
         }
 
-        public void Set(Point point)
+        public void Set(Score point)
         {
             if (point.Value > 20) {
                 Up();

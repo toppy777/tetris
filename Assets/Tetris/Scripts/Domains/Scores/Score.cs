@@ -2,15 +2,15 @@ using Tetris.Scripts.Domains.Levels;
 using UniRx;
 using System;
 
-namespace Tetris.Scripts.Domains.Points
+namespace Tetris.Scripts.Domains.Scores
 {
-    public class Point
+    public class Score
     {
         int _value = 0;
         public int Value => _value;
 
-        Subject<int> _whenPointAdd = new();
-        public IObservable<int> WhenPointAdd => _whenPointAdd;
+        Subject<int> _whenScoreAdd = new();
+        public IObservable<int> WhenScoreAdd => _whenScoreAdd;
 
         public void Add(Level level, int rowCount)
         {
@@ -18,7 +18,7 @@ namespace Tetris.Scripts.Domains.Points
             if (_value > 99999) {
                 _value = 99999;
             }
-            _whenPointAdd.OnNext(_value);
+            _whenScoreAdd.OnNext(_value);
         }
     }
 }

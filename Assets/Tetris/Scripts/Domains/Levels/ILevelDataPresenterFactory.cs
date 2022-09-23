@@ -3,7 +3,7 @@ using Tetris.Scripts.Domains.Games;
 
 namespace Tetris.Scripts.Domains.Levels
 {
-    public interface ILevelPresenterFactory
+    public interface ILevelDataPresenterFactory
     {
         IDisposable Create(Game game);
     }

@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minoPieceViewPrefab: {fileID: -2135529676207765082, guid: 2fb4a72777749154ca368bff081740e2, type: 3}
   _finishCanvasViewPrefab: {fileID: 500790577642909874, guid: f7d4dd7b37c976a4983ef5d57e9f7b67, type: 3}
+  _levelView: {fileID: 6668694563604604026, guid: 60e2c644f13f00342935e2675561f6d1, type: 3}
+  _scoreView: {fileID: 2246603382927883323, guid: c0470d608a2bae64c8ae72b902de8423, type: 3}

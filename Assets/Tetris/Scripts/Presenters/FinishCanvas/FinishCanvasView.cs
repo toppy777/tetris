@@ -33,5 +33,10 @@ namespace Tetris.Scripts.Presenters.FinishCanvas
         {
             return gameObject;
         }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
     }
 }

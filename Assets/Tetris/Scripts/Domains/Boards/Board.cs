@@ -64,14 +64,13 @@ namespace Tetris.Scripts.Domains.Boards
         {
             for (int x = 0; x <= _xMax; x++) {
                 RemoveAt(x,y);
-                // _piecesList[x,y].Delete();
-                // _piecesList[x,y] = null;
             }
         }
 
         public void RemoveAt(int x, int y)
         {
             _piecesList[x,y].Delete();
+            _piecesList[x,y].Dispose();
             _piecesList[x,y] = null;
         }
 

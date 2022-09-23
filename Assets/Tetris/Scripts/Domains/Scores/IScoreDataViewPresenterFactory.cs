@@ -1,9 +1,9 @@
 using System;
 using Tetris.Scripts.Domains.Games;
 
-namespace Tetris.Scripts.Domains.Points
+namespace Tetris.Scripts.Domains.Scores
 {
-    public interface IScoreViewPresenterFactory
+    public interface IScoreDataViewPresenterFactory
     {
         IDisposable Create(Game game);
     }

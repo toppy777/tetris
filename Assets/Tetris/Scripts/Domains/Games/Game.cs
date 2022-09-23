@@ -9,7 +9,7 @@ using Tetris.Scripts.Domains.Boards;
 using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Domains.MinoReserves;
 using Tetris.Scripts.Domains.Levels;
-using Tetris.Scripts.Domains.Points;
+using Tetris.Scripts.Domains.Scores;
 using Tetris.Scripts.Domains.HorizontalPositions;
 using Tetris.Scripts.Domains.GameStatuses;
 using Tetris.Scripts.Domains.MinoMoveSpeeds;
@@ -26,7 +26,7 @@ namespace Tetris.Scripts.Domains.Games
             MinoShadow = new MinoShadow();
             HoldMino = new HoldMino();
             Level = new Level();
-            Point = new Point();
+            Point = new Score();
             HorizontalPosition = new HorizontalPosition();
             Disposables = new List<IDisposable>();
             GameStatus = new GameStatus();
@@ -42,7 +42,7 @@ namespace Tetris.Scripts.Domains.Games
         public IMinoShadowBind MinoShadowBind { get; set; }
         public HoldMino HoldMino { get; }
         public Level Level { get; }
-        public Point Point { get; }
+        public Score Point { get; }
         public HorizontalPosition HorizontalPosition { get; }
         public List<IDisposable> Disposables { get; }
         public GameStatus GameStatus { get; }

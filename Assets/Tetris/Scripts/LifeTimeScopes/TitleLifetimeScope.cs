@@ -1,8 +1,10 @@
 using VContainer;
 using VContainer.Unity;
 using Tetris.Scripts.Domains.Titles;
+using Tetris.Scripts.Domains.Audios;
 using Tetris.Scripts.Application.Titles;
 using Tetris.Scripts.Presenters.Titles;
+using Tetris.Scripts.Presenters.Audios;
 
 namespace Tetris.Scripts.LifetimeScopes
 {

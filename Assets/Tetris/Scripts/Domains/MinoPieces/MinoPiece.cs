@@ -44,5 +44,10 @@ namespace Tetris.Scripts.Domains.MinoPieces
             _whenDelete.OnNext(Unit.Default);
         }
 
+        public void Dispose()
+        {
+            _whenChangePosition.Dispose();
+            _whenDelete.Dispose();
+        }
     }
 }

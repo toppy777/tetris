@@ -4,13 +4,13 @@ using Tetris.Scripts.Domains.Games;
 
 namespace Tetris.Scripts.Presenters.Scores
 {
-    public class ScoreViewPresenter
+    public class ScoreDataViewPresenter
     {
         public IDisposable Disposable;
         
-        public ScoreViewPresenter(Game game, ScoreView scoreView)
+        public ScoreDataViewPresenter(Game game, ScoreDataView scoreView)
         {
-            Disposable = game.Point.WhenPointAdd.Subscribe(score => {
+            Disposable = game.Point.WhenScoreAdd.Subscribe(score => {
                 scoreView.SetText(score);
             });
         }

@@ -8,5 +8,6 @@ namespace Tetris.Scripts.Domains.Others
         void UnDisplay();
         void SetRestartButtonClick(UnityAction action);
         void SetBackToTitleButton(UnityAction action);
+        void Destroy();
     }
 }

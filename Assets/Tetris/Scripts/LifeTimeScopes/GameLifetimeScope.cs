@@ -14,7 +14,7 @@ using Tetris.Scripts.Domains.Boards;
 using Tetris.Scripts.Domains.MinoReserves;
 using Tetris.Scripts.Domains.Others;
 using Tetris.Scripts.Domains.Levels;
-using Tetris.Scripts.Domains.Points;
+using Tetris.Scripts.Domains.Scores;
 
 using Tetris.Scripts.Presenters.FinishCanvas;
 using Tetris.Scripts.Presenters.Minos;
@@ -36,20 +36,18 @@ namespace Tetris.Scripts.LifetimeScopes
     public class GameLifetimeScope : LifetimeScope
     {
         [SerializeField] private Prefabs _prefabs;
-        [SerializeField] private MinoPieceView _minoPieceViewPrefab;
 
         protected override void Configure(IContainerBuilder builder)
         {
             // Prefabs
             builder.RegisterInstance(_prefabs);
-            builder.RegisterInstance(_minoPieceViewPrefab);
 
             // Infrastructures
             builder.Register<ModeRepository>(Lifetime.Singleton);
 
-            // Views
-            builder.RegisterComponentInHierarchy<LevelView>().AsSelf();
-            builder.RegisterComponentInHierarchy<ScoreView>().AsSelf();
+            // View Factory
+            builder.Register<LevelViewFactory>(Lifetime.Singleton).As<ILevelViewFactory>();
+            builder.Register<ScoreViewFactory>(Lifetime.Singleton).As<IScoreViewFactory>();
 
             // View Binds
             builder.Register<MinoBindFactory>(Lifetime.Singleton).As<IMinoBindFactory>();
@@ -88,8 +86,8 @@ namespace Tetris.Scripts.LifetimeScopes
             builder.Register<IntervalPresenterFactory>(Lifetime.Singleton).As<IIntervalPresenterFactory>();
 
             // ViewPresenters
-            builder.Register<LevelPresenterFactory>(Lifetime.Singleton).As<ILevelPresenterFactory>();
-            builder.Register<ScoreViewPresenterFactory>(Lifetime.Singleton).As<IScoreViewPresenterFactory>();
+            builder.Register<LevelDataPresenterFactory>(Lifetime.Singleton).As<ILevelDataPresenterFactory>();
+            builder.Register<ScoreDataViewPresenterFactory>(Lifetime.Singleton).As<IScoreDataViewPresenterFactory>();
 
             // Entry Point
             builder.RegisterEntryPoint<GameInitializer>();
