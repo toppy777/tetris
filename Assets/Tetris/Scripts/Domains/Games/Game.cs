@@ -41,6 +41,7 @@ namespace Tetris.Scripts.Domains.Games
         public MinoShadow MinoShadow { get; }
         public IMinoShadowBind MinoShadowBind { get; set; }
         public HoldMino HoldMino { get; }
+        public IHoldMinoBind HoldMinoBind { get; set; }
         public Level Level { get; }
         public Score Point { get; }
         public HorizontalPosition HorizontalPosition { get; }

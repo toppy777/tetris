@@ -1,3 +1,4 @@
+using UnityEngine;
 using Tetris.Scripts.Presenters.ScriptableObjects;
 using Tetris.Scripts.Domains.HoldMinos;
 using Tetris.Scripts.Presenters.MinoPieces;
@@ -15,9 +16,10 @@ namespace Tetris.Scripts.Presenters.HoldMinos
             _minoPieceViewPrefab = prefabs.MinoPieceViewPrefab;
         }
 
-        public void CreateHoldMinoBind(HoldMino holdMino)
+        public IHoldMinoBind CreateHoldMinoBind(HoldMino holdMino)
         {
-            new HoldMinoBind(holdMino, _minoPieceViewPrefab);
+            Debug.Log("Create Hold Mino Bind");
+            return new HoldMinoBind(holdMino, _minoPieceViewPrefab);
         }
     }
 }

@@ -107,6 +107,7 @@ namespace Tetris.Scripts.Application.Games
                 _game.MinoShadowBind?.Dispose();
                 _game.MinoBind?.Dispose();
                 _game.NextMinoBind?.Dispose();
+                _game.HoldMinoBind?.Dispose();
                 _finishCanvasView.UnDisplay();
                 Execute();
             });
@@ -117,6 +118,7 @@ namespace Tetris.Scripts.Application.Games
                 _game.MinoShadowBind?.Dispose();
                 _game.MinoBind?.Dispose();
                 _game.NextMinoBind?.Dispose();
+                _game.HoldMinoBind?.Dispose();
                 _finishCanvasView.Destroy();
                 if (_modeRepository.GetMode() == ModeType.Play) {
                     // score level view を削除

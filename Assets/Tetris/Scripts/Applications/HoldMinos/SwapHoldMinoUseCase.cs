@@ -30,7 +30,8 @@ namespace Tetris.Scripts.Application.HoldMinos
             game.Mino.Release();
             _createMinoUseCase.Execute(game.HoldMino.GetMinoType());
             game.HoldMino.Set(minoType);
-            _holdMinoBindFactory.CreateHoldMinoBind(game.HoldMino);
+            game.HoldMinoBind?.Dispose();
+            game.HoldMinoBind = _holdMinoBindFactory.CreateHoldMinoBind(game.HoldMino);
         }
     }
 }

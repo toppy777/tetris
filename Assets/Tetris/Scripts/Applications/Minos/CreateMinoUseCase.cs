@@ -28,7 +28,6 @@ namespace Tetris.Scripts.Application.Minos
 
         public void Execute(MinoType minoType)
         {
-            Debug.Log("Create");
             Game game = _gameRegistry.CurrentGame;
             game.Mino = _minoFactory.CreateMino(minoType);
             game.MinoBind = _minoBindFactory.CreateMinoBind(game.Mino);
