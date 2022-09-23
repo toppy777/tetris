@@ -1,4 +1,4 @@
-using Tetris.Scripts.Domains.PlacePredictions;
+using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Presenters.ScriptableObjects;
 using Tetris.Scripts.Presenters.MinoPieces;
 

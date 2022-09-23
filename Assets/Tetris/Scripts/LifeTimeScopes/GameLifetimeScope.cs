@@ -9,6 +9,7 @@ using Tetris.Scripts.Application.HoldMinos;
 using Tetris.Scripts.Domains.Games;
 using Tetris.Scripts.Domains.HoldMinos;
 using Tetris.Scripts.Domains.PlacePredictions;
+using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Domains.Minos;
 using Tetris.Scripts.Domains.Boards;
 using Tetris.Scripts.Domains.MinoReserves;

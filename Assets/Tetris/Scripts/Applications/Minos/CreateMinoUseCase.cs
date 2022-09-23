@@ -1,3 +1,4 @@
+using UnityEngine;
 using Tetris.Scripts.Domains.Games;
 using Tetris.Scripts.Domains.Minos;
 using Tetris.Scripts.Domains.MinoTypes;
@@ -27,6 +28,7 @@ namespace Tetris.Scripts.Application.Minos
 
         public void Execute(MinoType minoType)
         {
+            Debug.Log("Create");
             Game game = _gameRegistry.CurrentGame;
             game.Mino = _minoFactory.CreateMino(minoType);
             game.MinoBind = _minoBindFactory.CreateMinoBind(game.Mino);

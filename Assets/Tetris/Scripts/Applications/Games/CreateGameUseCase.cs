@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UniRx;
 using Tetris.Scripts.Domains.Games;
-using Tetris.Scripts.Domains.PlacePredictions;
+using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Domains.Others;
 using Tetris.Scripts.Domains.Inputs;
 using Tetris.Scripts.Domains.Levels;

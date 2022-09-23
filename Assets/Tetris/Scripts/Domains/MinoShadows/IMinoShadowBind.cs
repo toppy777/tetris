@@ -1,4 +1,4 @@
-namespace Tetris.Scripts.Domains.PlacePredictions
+namespace Tetris.Scripts.Domains.MinoShadows
 {
     public interface IMinoShadowBind
     {
