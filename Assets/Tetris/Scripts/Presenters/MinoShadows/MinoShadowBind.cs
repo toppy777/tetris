@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using UniRx;
-using Tetris.Scripts.Domains.MinoShadows;
+using Tetris.Scripts.Domains.PlacePredictions;
 using Tetris.Scripts.Presenters.MinoPieces;
 
 namespace Tetris.Scripts.Presenters.MinoShadows

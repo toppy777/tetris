@@ -4,7 +4,7 @@ using UniRx;
 using System;
 using Tetris.Scripts.Domains.Positions;
 
-namespace Tetris.Scripts.Domains.MinoShadows
+namespace Tetris.Scripts.Domains.PlacePredictions
 {
     public class MinoShadow
     {

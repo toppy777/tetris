@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UniRx;
 using Tetris.Scripts.Domains.Games;
-using Tetris.Scripts.Domains.MinoShadows;
+using Tetris.Scripts.Domains.PlacePredictions;
 using Tetris.Scripts.Domains.Others;
 using Tetris.Scripts.Domains.Inputs;
 using Tetris.Scripts.Domains.Levels;
@@ -70,8 +70,6 @@ namespace Tetris.Scripts.Application.Games
 
         public void Execute()
         {
-            Debug.Log(_modeRepository.GetMode());
-
             _game = new Game();
             _gameRegistry.Register(_game);
 

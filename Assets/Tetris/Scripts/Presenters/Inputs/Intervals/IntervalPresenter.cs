@@ -29,14 +29,19 @@ namespace Tetris.Scripts.Presenters.Inputs
                     }
 
                     if (!game.Mino.Exists()) {
+                        createNextMinoUseCase.Execute();
                         return;
                     }
 
-                    // ■ 動けるか調べる
+                    if (game.Mino.IsPrePlacePosition())
+                    {
+                        return;
+                    }
+
+                    //  下にうごけるか調べる
                     if (!boardService.CanMove(0, -1, game.Board, game.Mino)) {
-                        // ■ 盤面に固定
+                        // 盤面に固定
                         placeMinoUseCase.Execute();
-                        createNextMinoUseCase.Execute();
                         return;
                     }
 

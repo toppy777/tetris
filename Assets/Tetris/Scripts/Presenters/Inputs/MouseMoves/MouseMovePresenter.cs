@@ -18,7 +18,6 @@ namespace Tetris.Scripts.Presenters.Inputs
                 .Where(_ => game.Mino.Exists())
                 .Where(_ => game.HorizontalPosition.Value != HorizontalPosition.GetHorizontalPos())
                 .Subscribe(_ => {
-                    // ■ MinoShadowを移動(Presenterのどこかのクラスに移動)
                     minoMoveHorizontalUseCase.TryExecute();
                 });
         }

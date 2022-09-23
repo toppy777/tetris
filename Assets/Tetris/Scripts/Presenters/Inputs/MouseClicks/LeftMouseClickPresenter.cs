@@ -11,7 +11,7 @@ namespace Tetris.Scripts.Presenters.Inputs
     {
         public IDisposable Disposable;
 
-        public LeftMouseClickPresenter(Game game, FastPlaceMinoUseCase fastPlaceMinoUseCase, CreateNextMinoUseCase createNextMinoUseCase)
+        public LeftMouseClickPresenter(Game game, FastPlaceMinoUseCase fastPlaceMinoUseCase)
         {
             Disposable = Observable.EveryUpdate()
                 .Where(_ => game.GameStatus.Value == GameStatusType.Play)
@@ -19,7 +19,6 @@ namespace Tetris.Scripts.Presenters.Inputs
                 .Where(_ => game.Mino.Exists())
                 .Subscribe(_ => {
                     fastPlaceMinoUseCase.Execute();
-                    createNextMinoUseCase.Execute();
                 });
         }
     }

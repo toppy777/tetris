@@ -8,7 +8,7 @@ using Tetris.Scripts.Application.HoldMinos;
 
 using Tetris.Scripts.Domains.Games;
 using Tetris.Scripts.Domains.HoldMinos;
-using Tetris.Scripts.Domains.MinoShadows;
+using Tetris.Scripts.Domains.PlacePredictions;
 using Tetris.Scripts.Domains.Minos;
 using Tetris.Scripts.Domains.Boards;
 using Tetris.Scripts.Domains.MinoReserves;
@@ -62,7 +62,7 @@ namespace Tetris.Scripts.LifetimeScopes
 
             // Domain Services
             builder.Register<BoardService>(Lifetime.Singleton);
-            builder.Register<MinoShadowService>(Lifetime.Singleton);
+            builder.Register<PlacePrediction>(Lifetime.Singleton);
 
             // Use Cases
             builder.Register<CreateGameUseCase>(Lifetime.Singleton);

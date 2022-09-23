@@ -21,7 +21,7 @@ namespace Tetris.Scripts.Presenters.Inputs
 
         public IDisposable Create(Game game)
         {
-            var input = new LeftMouseClickPresenter(game, _fastPlaceMinoUseCase, _createNextMinoUseCase);
+            var input = new LeftMouseClickPresenter(game, _fastPlaceMinoUseCase/*, _createNextMinoUseCase*/);
             return input.Disposable;
         }
     }

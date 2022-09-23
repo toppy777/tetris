@@ -8,7 +8,9 @@ namespace Tetris.Scripts.Domains.Boards
     public class Board
     {
         private readonly int _xMax;
+        public int XMax => _xMax;
         private readonly int _yMax;
+        public int YMax => _yMax;
         MinoPiece[,] _piecesList;
 
         Subject<Unit> _whenPieceCrossOver = new();
