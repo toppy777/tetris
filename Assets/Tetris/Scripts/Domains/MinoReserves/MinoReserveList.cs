@@ -68,5 +68,10 @@ namespace Tetris.Scripts.Domains.MinoReserves
         {
             _list.Add(new MinoReserve());
         }
+
+        public void Dispose()
+        {
+            _whenPop.Dispose();
+        }
     }
 }

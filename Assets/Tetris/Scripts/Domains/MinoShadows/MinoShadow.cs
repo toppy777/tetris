@@ -29,5 +29,10 @@ namespace Tetris.Scripts.Domains.MinoShadows
             }
             return list;
         }
+
+        public void Dispose()
+        {
+            _whenPositionsChange.Dispose();
+        }
     }
 }

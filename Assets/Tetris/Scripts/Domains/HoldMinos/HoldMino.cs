@@ -40,5 +40,10 @@ namespace Tetris.Scripts.Domains.HoldMinos
         {
             _isFirst = false;
         }
+
+        public void Dispose()
+        {
+            _whenSet.Dispose();
+        }
     }
 }

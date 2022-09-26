@@ -20,5 +20,10 @@ namespace Tetris.Scripts.Domains.Scores
             }
             _whenScoreAdd.OnNext(_value);
         }
+
+        public void Dispose()
+        {
+            _whenScoreAdd.Dispose();
+        }
     }
 }

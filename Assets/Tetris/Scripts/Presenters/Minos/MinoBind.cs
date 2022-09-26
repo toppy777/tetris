@@ -40,7 +40,7 @@ namespace Tetris.Scripts.Presenters.Minos
             List<IObservable<Unit>> deleteObservables = mino.GetWhenDeleteObservables();
             foreach (MinoPieceView minoView in minoViews) {
                 deleteObservables[index++].Subscribe(_ => {
-                    GameObject.Destroy(minoView.gameObject);
+                    minoView.Delete();
                 }).AddTo(_disposable);
             }
         }

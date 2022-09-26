@@ -51,10 +51,16 @@ namespace Tetris.Scripts.Domains.Games
 
         public void Dispose()
         {
+            MinoReserveList.Dispose();
+            MinoShadow.Dispose();
+            HoldMino.Dispose();
+            Level.Dispose();
+            Point.Dispose();
             foreach (IDisposable disposable in Disposables) {
                 disposable?.Dispose();
             }
             Disposables.Clear();
+            Board.Dispose();
         }
     }
 }

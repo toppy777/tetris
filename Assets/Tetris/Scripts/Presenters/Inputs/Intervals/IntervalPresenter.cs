@@ -33,6 +33,8 @@ namespace Tetris.Scripts.Presenters.Inputs
                         return;
                     }
 
+                    Debug.Log(this.GetHashCode());
+
                     //  下にうごけるか調べる
                     if (!boardService.CanMove(0, -1, game.Board, game.Mino)) {
                         // 盤面に固定

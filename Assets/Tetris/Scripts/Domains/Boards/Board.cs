@@ -147,5 +147,11 @@ namespace Tetris.Scripts.Domains.Boards
                 }
             }
         }
+
+        public void Dispose()
+        {
+            _whenPieceCrossOver.Dispose();
+            _whenRowRemove.Dispose();
+        }
     }
 }

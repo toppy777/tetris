@@ -43,5 +43,10 @@ namespace Tetris.Scripts.Domains.Levels
                 _value = 10;
             }
         }
+
+        public void Dispose()
+        {
+            _whenLevelSet.Dispose();
+        }
     }
 }
