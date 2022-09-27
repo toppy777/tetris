@@ -1,3 +1,4 @@
+using UniRx;
 using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Presenters.ScriptableObjects;
 using Tetris.Scripts.Presenters.MinoPieces;
@@ -15,9 +16,9 @@ namespace Tetris.Scripts.Presenters.MinoShadows
             _minoPieceViewPrefab = prefabs.MinoPieceViewPrefab;
         }
 
-        public IMinoShadowBind CreateMinoShadowBind(MinoShadow minoShadow)
+        public void CreateMinoShadowBind(MinoShadow minoShadow, CompositeDisposable disposable)
         {
-            return new MinoShadowBind(minoShadow, _minoPieceViewPrefab);
+            new MinoShadowBind(minoShadow, _minoPieceViewPrefab).AddTo(disposable);
         }
     }
 }

@@ -28,9 +28,9 @@ namespace Tetris.Scripts.Domains.Games
             Level = new Level();
             Point = new Score();
             HorizontalPosition = new HorizontalPosition();
-            Disposables = new List<IDisposable>();
             GameStatus = new GameStatus();
             MinoMoveSpeed = new MinoMoveSpeed();
+            Disposable = new CompositeDisposable();
         }
 
         public Mino Mino { get; set; }
@@ -45,22 +45,21 @@ namespace Tetris.Scripts.Domains.Games
         public Level Level { get; }
         public Score Point { get; }
         public HorizontalPosition HorizontalPosition { get; }
-        public List<IDisposable> Disposables { get; }
         public GameStatus GameStatus { get; }
         public MinoMoveSpeed MinoMoveSpeed { get; }
+        public CompositeDisposable Disposable { get; }
 
         public void Dispose()
         {
-            MinoReserveList.Dispose();
-            MinoShadow.Dispose();
+            MinoBind.Dispose();
+            NextMinoBind.Dispose();
+            MinoShadowBind.Dispose();
             HoldMino.Dispose();
+            HoldMinoBind.Dispose();
             Level.Dispose();
             Point.Dispose();
-            foreach (IDisposable disposable in Disposables) {
-                disposable?.Dispose();
-            }
-            Disposables.Clear();
             Board.Dispose();
+            Disposable.Dispose();
         }
     }
 }

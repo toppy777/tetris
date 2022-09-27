@@ -8,11 +8,9 @@ namespace Tetris.Scripts.Application.Games
     public class GameInitializer : IInitializable
     {
         private readonly CreateGameUseCase _createGameUseCase;
-        IAudio _audio;
 
         public GameInitializer(
-            CreateGameUseCase createGameUseCase,
-            IAudio audio
+            CreateGameUseCase createGameUseCase
         )
         {
             _createGameUseCase = createGameUseCase;
@@ -20,15 +18,7 @@ namespace Tetris.Scripts.Application.Games
 
         public void Initialize()
         {
-            Debug.Log("Initialize!");
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            if (scene.name == "SampleScene") {
-                _createGameUseCase.Execute();
-            }
+            _createGameUseCase.Execute();
         }
     }
 }

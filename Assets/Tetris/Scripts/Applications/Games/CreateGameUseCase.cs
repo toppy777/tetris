@@ -77,26 +77,18 @@ namespace Tetris.Scripts.Application.Games
 
             if (_modeRepository.GetMode() == ModeType.Play)
             {
-                _game.Disposables.Add(
-                    _game.Board.WhenRowRemove.Subscribe(_ => {
-                        _game.Point.Add(_game.Level, 1);
-                        _game.Level.Set(_game.Point);
-                        _game.MinoMoveSpeed.SetSpeed(_game.Level);
-                        Debug.Log($"ポイント: {_game.Point.Value}");
-                        Debug.Log($"レベル: {_game.Level.Value}");
-                    })
-                );
+                _game.Board.WhenRowRemove.Subscribe(_ => {
+                    _game.Point.Add(_game.Level, 1);
+                    _game.Level.Set(_game.Point);
+                    _game.MinoMoveSpeed.SetSpeed(_game.Level);
+                }).AddTo(_game.Disposable);
 
                 _levelView = _levelViewFactory.Create();
-                _game.Disposables.Add(
-                    _levelDataPresenterFactory.Create(_game)
-                );
+                _levelDataPresenterFactory.Create(_game).AddTo(_game.Disposable);
                 _levelView.Display();
 
                 _scoreView = _scoreViewFactory.Create();
-                _game.Disposables.Add(
-                    _scoreDataViewPresenterFactory.Create(_game)
-                );
+                _scoreDataViewPresenterFactory.Create(_game).AddTo(_game.Disposable);
                 _scoreView.Display();
             }
 
@@ -104,8 +96,8 @@ namespace Tetris.Scripts.Application.Games
                 // ボードクリア
                 _game.Board.Clear();
                 _game.Mino.Release();
-                _game.MinoShadowBind?.Dispose();
-                _game.MinoBind?.Dispose();
+                // _game.MinoShadowBind?.Dispose();
+                // _game.MinoBind?.Dispose();
                 _game.NextMinoBind?.Dispose();
                 _game.HoldMinoBind?.Dispose();
                 _finishCanvasView.UnDisplay();
@@ -115,8 +107,8 @@ namespace Tetris.Scripts.Application.Games
             _finishCanvasView.SetBackToTitleButton(() => {
                 _game.Board.Clear();
                 _game.Mino.Release();
-                _game.MinoShadowBind?.Dispose();
-                _game.MinoBind?.Dispose();
+                // _game.MinoShadowBind?.Dispose();
+                // _game.MinoBind?.Dispose();
                 _game.NextMinoBind?.Dispose();
                 _game.HoldMinoBind?.Dispose();
                 _finishCanvasView.Destroy();
@@ -136,23 +128,23 @@ namespace Tetris.Scripts.Application.Games
                 _game.Dispose();
             });
 
-            _game.MinoShadowBind = _minoShadowBindFactory.CreateMinoShadowBind(_game.MinoShadow);
+            _minoShadowBindFactory.CreateMinoShadowBind(_game.MinoShadow, _game.Disposable);
 
             _game.GameStatus.Play();
 
             _createNextMinoUseCase.Execute();
 
             // 左クリックしたときの処理
-            _game.Disposables.Add(_leftMouseClickPresenterFactory.Create(_game));
+            _leftMouseClickPresenterFactory.Create(_game).AddTo(_game.Disposable);
             // 右クリックしたときの処理
-            _game.Disposables.Add(_rightMouseClickPresenterFactory.Create(_game));
+            _rightMouseClickPresenterFactory.Create(_game).AddTo(_game.Disposable);
             // カーソルを動かしたときの処理
-            _game.Disposables.Add(_mouseMovePresenterFactory.Create(_game));
+            _mouseMovePresenterFactory.Create(_game).AddTo(_game.Disposable);
             // スクロールした時の処理
-            _game.Disposables.Add(_scrollUpPresenterFactory.Create(_game));
-            _game.Disposables.Add(_scrollDownPresenterFactory.Create(_game));
+            _scrollUpPresenterFactory.Create(_game).AddTo(_game.Disposable);
+            _scrollDownPresenterFactory.Create(_game).AddTo(_game.Disposable);
             // 0.5秒毎に実行する処理
-            _game.Disposables.Add(_intervalPresenterFactory.Create(_game));
+            _intervalPresenterFactory.Create(_game).AddTo(_game.Disposable);
         }
 
     }
