@@ -78,8 +78,8 @@ namespace Tetris.Scripts.Application.Games
             if (_modeRepository.GetMode() == ModeType.Play)
             {
                 _game.Board.WhenRowRemove.Subscribe(_ => {
-                    _game.Point.Add(_game.Level, 1);
-                    _game.Level.Set(_game.Point);
+                    _game.Score.Add(_game.Level, 1);
+                    _game.Level.Set(_game.Score);
                     _game.MinoMoveSpeed.SetSpeed(_game.Level);
                 }).AddTo(_game.Disposable);
 
@@ -94,13 +94,11 @@ namespace Tetris.Scripts.Application.Games
 
             _finishCanvasView.SetRestartButtonClick(() => {
                 ClickButtonHandler();
-                _finishCanvasView.UnDisplay();
                 Execute();
             });
 
             _finishCanvasView.SetBackToTitleButton(() => {
                 ClickButtonHandler();
-                _finishCanvasView.Destroy();
                 SceneManager.LoadScene("TitleScene");
             });
 
@@ -111,7 +109,7 @@ namespace Tetris.Scripts.Application.Games
                 _finishCanvasView.Display();
             });
 
-            _minoShadowBindFactory.CreateMinoShadowBind(_game.MinoShadow, _game.Disposable);
+            _game.MinoShadowBind = _minoShadowBindFactory.CreateMinoShadowBind(_game.MinoShadow, _game.Disposable);
 
             _game.GameStatus.Play();
 
@@ -134,13 +132,15 @@ namespace Tetris.Scripts.Application.Games
         {
             _game.Board.Clear();
             _game.Mino.Release();
-            _game.NextMinoBind.DestroyView();
-            _game.HoldMinoBind.DestroyView();
+            _game.NextMinoBind?.DestroyView();
+            _game.HoldMinoBind?.DestroyView();
+            _game.MinoShadowBind?.DestroyView();
+            _game.Dispose();
             if (_modeRepository.GetMode() == ModeType.Play) {
                 _levelView.Destroy();
                 _scoreView.Destroy();
             }
-            _game.Dispose();
+            _finishCanvasView.Destroy();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Tetris.Scripts.Presenters.MinoShadows
 {
     public class MinoShadowBind : IMinoShadowBind, IDisposable
     {
+        Subject<Unit> _whenDeleteView = new();
         private readonly CompositeDisposable _disposable = new();
 
         public MinoShadowBind(
@@ -31,6 +32,14 @@ namespace Tetris.Scripts.Presenters.MinoShadows
                     shadowPieceViews[i].transform.position = GetPosition(positions[i]);
                 }
             }).AddTo(_disposable);
+
+            _whenDeleteView.Subscribe(_ => {
+                foreach (MinoPieceView view in shadowPieceViews) {
+                    if (view != null) {
+                        GameObject.Destroy(view.gameObject);
+                    }
+                }
+            }).AddTo(_disposable);
         }
 
         private const float xBegin = 0.24f;
@@ -45,6 +54,11 @@ namespace Tetris.Scripts.Presenters.MinoShadows
         public void Dispose()
         {
             _disposable?.Dispose();
+        }
+
+        public void DestroyView()
+        {
+            _whenDeleteView.OnNext(Unit.Default);
         }
     }
 

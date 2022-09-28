@@ -4,6 +4,6 @@ namespace Tetris.Scripts.Domains.MinoShadows
 {
     public interface IMinoShadowBindFactory
     {
-        void CreateMinoShadowBind(MinoShadow minoShadow, CompositeDisposable disposable);
+        IMinoShadowBind CreateMinoShadowBind(MinoShadow minoShadow, CompositeDisposable disposable);
     }
 }

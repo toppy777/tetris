@@ -26,7 +26,7 @@ namespace Tetris.Scripts.Domains.Games
             MinoShadow = new MinoShadow();
             HoldMino = new HoldMino();
             Level = new Level();
-            Point = new Score();
+            Score = new Score();
             HorizontalPosition = new HorizontalPosition();
             GameStatus = new GameStatus();
             MinoMoveSpeed = new MinoMoveSpeed();
@@ -43,7 +43,7 @@ namespace Tetris.Scripts.Domains.Games
         public HoldMino HoldMino { get; }
         public IHoldMinoBind HoldMinoBind { get; set; }
         public Level Level { get; }
-        public Score Point { get; }
+        public Score Score { get; }
         public HorizontalPosition HorizontalPosition { get; }
         public GameStatus GameStatus { get; }
         public MinoMoveSpeed MinoMoveSpeed { get; }
@@ -57,7 +57,7 @@ namespace Tetris.Scripts.Domains.Games
             HoldMino?.Dispose();
             HoldMinoBind?.Dispose();
             Level?.Dispose();
-            Point?.Dispose();
+            Score?.Dispose();
             Board?.Dispose();
             Disposable?.Dispose();
         }

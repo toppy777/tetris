@@ -10,7 +10,7 @@ namespace Tetris.Scripts.Presenters.Scores
         
         public ScoreDataViewPresenter(Game game, ScoreDataView scoreView)
         {
-            Disposable = game.Point.WhenScoreAdd.Subscribe(score => {
+            Disposable = game.Score.WhenScoreAdd.Subscribe(score => {
                 scoreView.SetText(score);
             });
         }
