@@ -18,7 +18,6 @@ namespace Tetris.Scripts.Presenters.HoldMinos
 
         public IHoldMinoBind CreateHoldMinoBind(HoldMino holdMino)
         {
-            Debug.Log("Create Hold Mino Bind");
             return new HoldMinoBind(holdMino, _minoPieceViewPrefab);
         }
     }

@@ -10,6 +10,7 @@ namespace Tetris.Scripts.Presenters.HoldMinos
 {
     public class HoldMinoBind : IHoldMinoBind
     {
+        Subject<Unit> _whenDeleteView = new();
         private readonly CompositeDisposable _disposable = new();
 
         public HoldMinoBind(
@@ -38,12 +39,23 @@ namespace Tetris.Scripts.Presenters.HoldMinos
                         GameObject.Destroy(view.gameObject);
                     }
                 }).AddTo(_disposable);
+
+                _whenDeleteView.Subscribe(_ => {
+                    if (view != null) {
+                        GameObject.Destroy(view.gameObject);
+                    }
+                }).AddTo(_disposable);
             }
         }
 
         public void Dispose()
         {
             _disposable.Dispose();
+        }
+
+        public void DestroyView()
+        {
+            _whenDeleteView.OnNext(Unit.Default);
         }
     }
 }

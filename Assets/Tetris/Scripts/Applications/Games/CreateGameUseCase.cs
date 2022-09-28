@@ -134,7 +134,8 @@ namespace Tetris.Scripts.Application.Games
         {
             _game.Board.Clear();
             _game.Mino.Release();
-            _game.NextMinoBind.DeleteView();
+            _game.NextMinoBind.DestroyView();
+            _game.HoldMinoBind.DestroyView();
             if (_modeRepository.GetMode() == ModeType.Play) {
                 _levelView.Destroy();
                 _scoreView.Destroy();

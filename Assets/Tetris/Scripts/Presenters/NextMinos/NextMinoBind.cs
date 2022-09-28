@@ -61,7 +61,7 @@ namespace Tetris.Scripts.Presenters.NextMinos
             _disposable.Dispose();
         }
 
-        public void DeleteView()
+        public void DestroyView()
         {
             _whenDeleteView.OnNext(Unit.Default);
         }
