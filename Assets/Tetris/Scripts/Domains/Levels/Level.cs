@@ -20,7 +20,7 @@ namespace Tetris.Scripts.Domains.Levels
 
         public void Set(Score point)
         {
-            if (point.Value > 20) {
+            if (point.Value > 1) {
                 Up();
             } else if (point.Value > 40) {
                 Up();

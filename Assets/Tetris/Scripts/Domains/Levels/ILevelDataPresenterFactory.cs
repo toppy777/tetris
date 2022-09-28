@@ -5,6 +5,6 @@ namespace Tetris.Scripts.Domains.Levels
 {
     public interface ILevelDataPresenterFactory
     {
-        IDisposable Create(Game game);
+        IDisposable Create(Game game, ILevelDataView levelDataView);
     }
 }

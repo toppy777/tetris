@@ -5,6 +5,6 @@ namespace Tetris.Scripts.Domains.Scores
 {
     public interface IScoreDataViewPresenterFactory
     {
-        IDisposable Create(Game game);
+        IDisposable Create(Game game, IScoreDataView scoreDataView);
     }
 }

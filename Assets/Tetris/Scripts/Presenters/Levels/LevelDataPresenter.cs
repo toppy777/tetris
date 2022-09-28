@@ -1,6 +1,7 @@
 using System;
 using UniRx;
 using Tetris.Scripts.Domains.Games;
+using Tetris.Scripts.Domains.Levels;
 
 namespace Tetris.Scripts.Presenters.Levels
 {
@@ -8,7 +9,7 @@ namespace Tetris.Scripts.Presenters.Levels
     {
         public IDisposable Disposable;
         
-        public LevelDataPresenter(Game game, LevelDataView levelView)
+        public LevelDataPresenter(Game game, ILevelDataView levelView)
         {
             Disposable = game.Level.WhenLevelSet.Subscribe(level => {
                 levelView.SetText(level);

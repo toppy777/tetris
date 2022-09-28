@@ -1,4 +1,5 @@
 using System;
+using UniRx;
 using UnityEngine;
 using Tetris.Scripts.Domains.Games;
 using Tetris.Scripts.Domains.Scores;
@@ -7,9 +8,8 @@ namespace Tetris.Scripts.Presenters.Scores
 {
     public class ScoreDataViewPresenterFactory : IScoreDataViewPresenterFactory
     {
-        public IDisposable Create(Game game)
+        public IDisposable Create(Game game, IScoreDataView scoreDataView)
         {
-            ScoreDataView scoreDataView = GameObject.Find("ScoreData").GetComponent<ScoreDataView>();
             var presenter = new ScoreDataViewPresenter(game, scoreDataView);
             return presenter.Disposable;
         }

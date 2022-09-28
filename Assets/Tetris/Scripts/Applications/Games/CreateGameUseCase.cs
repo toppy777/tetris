@@ -84,12 +84,12 @@ namespace Tetris.Scripts.Application.Games
                 }).AddTo(_game.Disposable);
 
                 _levelView = _levelViewFactory.Create();
-                _levelDataPresenterFactory.Create(_game).AddTo(_game.Disposable);
-                _levelView.Display();
+                ILevelDataView levelDataView = _levelView.GetScoreDataView();
+                _levelDataPresenterFactory.Create(_game, levelDataView).AddTo(_game.Disposable);
 
                 _scoreView = _scoreViewFactory.Create();
-                _scoreDataViewPresenterFactory.Create(_game).AddTo(_game.Disposable);
-                _scoreView.Display();
+                IScoreDataView scoreDataView = _scoreView.GetScoreDataView();
+                _scoreDataViewPresenterFactory.Create(_game, scoreDataView).AddTo(_game.Disposable);
             }
 
             _finishCanvasView.SetRestartButtonClick(() => {
