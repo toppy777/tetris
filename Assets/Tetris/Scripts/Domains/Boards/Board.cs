@@ -139,8 +139,8 @@ namespace Tetris.Scripts.Domains.Boards
 
         public void Clear()
         {
-            for (int y = 0; y < _yMax; y++) {
-                for (int x = 0; x < _xMax; x++) {
+            for (int y = 0; y <= _yMax; y++) {
+                for (int x = 0; x <= _xMax; x++) {
                     if (!IsEmptyAt(x,y)) {
                         RemoveAt(x,y);
                     }

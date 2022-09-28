@@ -4,7 +4,7 @@ using UniRx;
 
 namespace Tetris.Scripts.Presenters.MinoPieces
 {
-    public class MinoPieceView : MonoBehaviour, IDisposable
+    public class MinoPieceView : MonoBehaviour
     {
         private readonly CompositeDisposable _disposable = new();
 
@@ -19,11 +19,6 @@ namespace Tetris.Scripts.Presenters.MinoPieces
         }
 
         public void Delete()
-        {
-            if (gameObject != null) Destroy(gameObject);
-        }
-
-        public void Dispose()
         {
             if (gameObject != null) Destroy(gameObject);
         }

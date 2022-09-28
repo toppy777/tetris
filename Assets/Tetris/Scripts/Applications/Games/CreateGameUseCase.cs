@@ -93,30 +93,14 @@ namespace Tetris.Scripts.Application.Games
             }
 
             _finishCanvasView.SetRestartButtonClick(() => {
-                // ボードクリア
-                _game.Board.Clear();
-                _game.Mino.Release();
-                // _game.MinoShadowBind?.Dispose();
-                // _game.MinoBind?.Dispose();
-                _game.NextMinoBind?.Dispose();
-                _game.HoldMinoBind?.Dispose();
+                ClickButtonHandler();
                 _finishCanvasView.UnDisplay();
                 Execute();
             });
 
             _finishCanvasView.SetBackToTitleButton(() => {
-                _game.Board.Clear();
-                _game.Mino.Release();
-                // _game.MinoShadowBind?.Dispose();
-                // _game.MinoBind?.Dispose();
-                _game.NextMinoBind?.Dispose();
-                _game.HoldMinoBind?.Dispose();
+                ClickButtonHandler();
                 _finishCanvasView.Destroy();
-                if (_modeRepository.GetMode() == ModeType.Play) {
-                    // score level view を削除
-                    _levelView.Destroy();
-                    _scoreView.Destroy();
-                }
                 SceneManager.LoadScene("TitleScene");
             });
 
@@ -125,7 +109,6 @@ namespace Tetris.Scripts.Application.Games
             _game.Board.WhenPieceCrossOver.First().Subscribe(_ => {
                 _game.GameStatus.GameOver();
                 _finishCanvasView.Display();
-                _game.Dispose();
             });
 
             _minoShadowBindFactory.CreateMinoShadowBind(_game.MinoShadow, _game.Disposable);
@@ -147,5 +130,16 @@ namespace Tetris.Scripts.Application.Games
             _intervalPresenterFactory.Create(_game).AddTo(_game.Disposable);
         }
 
+        public void ClickButtonHandler()
+        {
+            _game.Board.Clear();
+            _game.Mino.Release();
+            _game.NextMinoBind.DeleteView();
+            if (_modeRepository.GetMode() == ModeType.Play) {
+                _levelView.Destroy();
+                _scoreView.Destroy();
+            }
+            _game.Dispose();
+        }
     }
 }

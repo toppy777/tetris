@@ -21,7 +21,6 @@ namespace Tetris.Scripts.Presenters.Minos
             List<MinoPieceView> minoViews = new List<MinoPieceView>();
             for (int i = 0; i < pieceNum; i++) {
                 var copy = GameObject.Instantiate(minoPieceViewPrefab);
-                copy.AddTo(_disposable);
                 copy.GetComponent<Renderer>().material.color = mino.Color;
                 minoViews.Add(copy);
             }
@@ -56,7 +55,7 @@ namespace Tetris.Scripts.Presenters.Minos
 
         public void Dispose()
         {
-            _disposable.Dispose();
+            _disposable?.Dispose();
         }
 
     }

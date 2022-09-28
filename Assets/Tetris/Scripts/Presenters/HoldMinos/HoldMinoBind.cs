@@ -27,7 +27,6 @@ namespace Tetris.Scripts.Presenters.HoldMinos
             int pieceNum = 4;
             for (int i = 0; i < pieceNum; i++) {
                 MinoPieceView copy = GameObject.Instantiate(minoPieceViewPrefab);
-                copy.AddTo(_disposable);
                 copy.SetColor(minoColor.Value);
                 copy.SetPosition(new Vector2(pos.x + minoShapePatten.GetShape()[i].x * 0.16f, pos.y + minoShapePatten.GetShape()[i].y * 0.16f));
                 pieceViews.Add(copy);
