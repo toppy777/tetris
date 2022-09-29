@@ -1,4 +1,5 @@
 using UnityEngine;
+using Tetris.Scripts.Presenters.Boards;
 
 namespace Tetris.Scripts.Domains.HorizontalPositions
 {
@@ -27,7 +28,7 @@ namespace Tetris.Scripts.Domains.HorizontalPositions
 
         static int GetPositionX(float posX)
         {
-            int ret = Mathf.FloorToInt(posX / 0.16f) - 1;
+            int ret = Mathf.FloorToInt(posX / BoardData.squareSize) - 1;
             if (ret < 0) {
                 ret = 0;
             }

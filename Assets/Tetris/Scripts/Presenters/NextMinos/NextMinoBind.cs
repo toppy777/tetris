@@ -7,6 +7,7 @@ using Tetris.Scripts.Domains.MinoTypes;
 using Tetris.Scripts.Domains.MinoShapes;
 using Tetris.Scripts.Domains.MinoColors;
 using Tetris.Scripts.Presenters.MinoPieces;
+using Tetris.Scripts.Presenters.Boards;
 
 namespace Tetris.Scripts.Presenters.NextMinos
 {
@@ -35,7 +36,8 @@ namespace Tetris.Scripts.Presenters.NextMinos
                 for (int i = 0; i < 4; i++) {
                     MinoPieceView pieceView = GameObject.Instantiate(minoPieceView);
                     pieceView.SetColor(minoColor.Value);
-                    pieceView.SetPosition(new Vector2(posList[index].x + minoShapePatten.GetShape()[i].x * 0.16f, posList[index].y + minoShapePatten.GetShape()[i].y * 0.16f));
+                    float squareSize = BoardData.squareSize;
+                    pieceView.SetPosition(new Vector2(posList[index].x + minoShapePatten.GetShape()[i].x * squareSize, posList[index].y + minoShapePatten.GetShape()[i].y * squareSize));
                     pieceViews.Add(pieceView);
                 }
                 index++;

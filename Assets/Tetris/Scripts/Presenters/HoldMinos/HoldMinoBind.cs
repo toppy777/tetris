@@ -5,6 +5,7 @@ using Tetris.Scripts.Domains.HoldMinos;
 using Tetris.Scripts.Domains.MinoShapes;
 using Tetris.Scripts.Domains.MinoColors;
 using Tetris.Scripts.Presenters.MinoPieces;
+using Tetris.Scripts.Presenters.Boards;
 
 namespace Tetris.Scripts.Presenters.HoldMinos
 {
@@ -29,7 +30,8 @@ namespace Tetris.Scripts.Presenters.HoldMinos
             for (int i = 0; i < pieceNum; i++) {
                 MinoPieceView copy = GameObject.Instantiate(minoPieceViewPrefab);
                 copy.SetColor(minoColor.Value);
-                copy.SetPosition(new Vector2(pos.x + minoShapePatten.GetShape()[i].x * 0.16f, pos.y + minoShapePatten.GetShape()[i].y * 0.16f));
+                float squareSize = BoardData.squareSize;
+                copy.SetPosition(new Vector2(pos.x + minoShapePatten.GetShape()[i].x * squareSize, pos.y + minoShapePatten.GetShape()[i].y * squareSize));
                 pieceViews.Add(copy);
             }
 

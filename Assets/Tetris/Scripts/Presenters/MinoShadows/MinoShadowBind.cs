@@ -4,6 +4,7 @@ using System;
 using UniRx;
 using Tetris.Scripts.Domains.MinoShadows;
 using Tetris.Scripts.Presenters.MinoPieces;
+using Tetris.Scripts.Presenters.Boards;
 
 namespace Tetris.Scripts.Presenters.MinoShadows
 {
@@ -42,13 +43,11 @@ namespace Tetris.Scripts.Presenters.MinoShadows
             }).AddTo(_disposable);
         }
 
-        private const float xBegin = 0.24f;
-        private const float yBegin = 0.24f;
         public Vector2 GetPosition(Vector2Int indexPos)
         {
-            float x = indexPos.x * 0.16f;
-            float y = indexPos.y * 0.16f;
-            return new Vector2(x + xBegin, y + yBegin);
+            float x = indexPos.x * BoardData.squareSize;
+            float y = indexPos.y * BoardData.squareSize;
+            return new Vector2(x + BoardData.beginX, y + BoardData.beginY);
         }
 
         public void Dispose()
