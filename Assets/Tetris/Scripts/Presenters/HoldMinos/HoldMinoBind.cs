@@ -19,7 +19,7 @@ namespace Tetris.Scripts.Presenters.HoldMinos
             MinoPieceView minoPieceViewPrefab
         )
         {
-            Vector2 pos = new Vector2(-1, 3.2f);
+            Vector2 pos = new Vector2(-1.3f, 3.6f);
 
             MinoShape minoShapePatten = new MinoShape(holdMino.GetMinoType());
             MinoColor minoColor = new MinoColor(holdMino.GetMinoType());

@@ -23,7 +23,7 @@ namespace Tetris.Scripts.Presenters.NextMinos
         {
             List<Vector2> posList = new List<Vector2>();
             for (int i = 0; i < 7; i++) {
-                posList.Add(new Vector2(2.72f, 3.12f - 0.6f * i));
+                posList.Add(new Vector2(2.7f, 3.6f - 0.6f * i));
             }
 
             // Minoの形と色を取り出して、特定の位置に配置
