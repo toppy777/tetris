@@ -19,7 +19,7 @@ namespace Tetris.Scripts.Presenters.MinoShadows
         )
         {
             int pieceNum = 4;
-            Color32 color = new Color32(255, 255, 255, 70);
+            Color32 color = new Color32(255, 255, 255, 150);
 
             List<MinoPieceView> shadowPieceViews = new List<MinoPieceView>();
             for (int i = 0; i < pieceNum; i++) {
