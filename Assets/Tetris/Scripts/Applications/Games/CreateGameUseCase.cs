@@ -138,6 +138,7 @@ namespace Tetris.Scripts.Application.Games
         {
             _game.Board.Clear();
             _game.Mino.Release();
+            _game.MinoBind?.DestroyView();
             _game.NextMinoBind?.DestroyView();
             _game.HoldMinoBind?.DestroyView();
             _game.MinoShadowBind?.DestroyView();

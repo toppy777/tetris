@@ -51,7 +51,6 @@ namespace Tetris.Scripts.Domains.Games
 
         public void Dispose()
         {
-            MinoBind?.Dispose();
             NextMinoBind?.Dispose();
             MinoShadowBind?.Dispose();
             HoldMino?.Dispose();

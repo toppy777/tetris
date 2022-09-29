@@ -11,6 +11,7 @@ namespace Tetris.Scripts.Presenters.Minos
     public class MinoBind : IMinoBind, IDisposable
     {
         private readonly CompositeDisposable _disposable = new();
+        private Subject<Unit> _whenDeleteView = new();
 
         public MinoBind(
             Mino mino,
@@ -42,6 +43,9 @@ namespace Tetris.Scripts.Presenters.Minos
                 deleteObservables[index++].Subscribe(_ => {
                     minoView.Delete();
                 }).AddTo(_disposable);
+                _whenDeleteView.Subscribe(_ => {
+                    minoView.Delete();
+                }).AddTo(_disposable);
             }
         }
 
@@ -57,5 +61,9 @@ namespace Tetris.Scripts.Presenters.Minos
             _disposable?.Dispose();
         }
 
+        public void DestroyView()
+        {
+            _whenDeleteView.OnNext(Unit.Default);
+        }
     }
 }
