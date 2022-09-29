@@ -106,6 +106,12 @@ namespace Tetris.Scripts.Application.Games
 
             _game.Board.WhenPieceCrossOver.First().Subscribe(_ => {
                 _game.GameStatus.GameOver();
+                if (_modeRepository.GetMode() == ModeType.Play) {
+                    _finishCanvasView.SetScore(_game.Score.Value);
+                    _finishCanvasView.DisplayScore();
+                } else {
+                    _finishCanvasView.DisplayFinishText();
+                }
                 _finishCanvasView.Display();
             });
 
