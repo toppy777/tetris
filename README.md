@@ -2,6 +2,10 @@
 
 ![プレイgif](/screenshots/play.gif "プレイgif")
 
+以下のURLからプレイできます。
+
+https://unityroom.com/games/tetris-toppy
+
 ## 制作した目的
 
 - 設計を学ぶ
