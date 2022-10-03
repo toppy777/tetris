@@ -20,19 +20,28 @@ namespace Tetris.Scripts.Domains.Levels
 
         public void Set(Score point)
         {
-            if (point.Value > 1) {
+            if (point.Value >= 10 && _value == 1) {
                 Up();
-            } else if (point.Value > 40) {
+            } else if (point.Value >= 30 && _value == 2) {
                 Up();
-            } else if (point.Value > 80) {
+            } else if (point.Value >= 60 && _value == 3) {
                 Up();
-            } else if (point.Value > 160) {
+            } else if (point.Value >= 100 && _value == 4) {
                 Up();
-            } else if (point.Value > 320) {
+            } else if (point.Value >= 150 && _value == 5) {
+                Up();
+            } else if (point.Value >= 210 && _value == 6) {
+                Up();
+            } else if (point.Value >= 280 && _value == 7) {
+                Up();
+            } else if (point.Value >= 360 && _value == 8) {
+                Up();
+            } else if (point.Value >= 450 && _value == 9) {
                 Up();
             } else {
                 // 何もしない
             }
+
             _whenLevelSet.OnNext(_value);
         }
 

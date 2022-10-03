@@ -23,16 +23,31 @@ namespace Tetris.Scripts.Domains.MinoMoveSpeeds
                     speed = 0.5f;
                     break;
                 case 2:
-                    speed = 0.4f;
+                    speed = 0.45f;
                     break;
                 case 3:
-                    speed = 0.3f;
+                    speed = 0.40f;
                     break;
                 case 4:
-                    speed = 0.2f;
+                    speed = 0.35f;
                     break;
                 case 5:
-                    speed = 0.1f;
+                    speed = 0.30f;
+                    break;
+                case 6:
+                    speed = 0.20f;
+                    break;
+                case 7:
+                    speed = 0.15f;
+                    break;
+                case 8:
+                    speed = 0.10f;
+                    break;
+                case 9:
+                    speed = 0.05f;
+                    break;
+                case 10:
+                    speed = 0.02f;
                     break;
             }
             _speed = speed;
